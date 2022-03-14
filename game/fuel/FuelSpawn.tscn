@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://game/fuel/Fuel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://game/fuel/FuelSpawn.gd" type="Script" id=2]
+
+[node name="FuelSpawn" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 10.0
+
+[node name="Fuel" parent="." instance=ExtResource( 1 )]
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="picked_up" from="Fuel" to="." method="_on_fuel_picked_up"]

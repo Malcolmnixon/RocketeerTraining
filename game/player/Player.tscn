@@ -1,0 +1,119 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://assets/freesound.org/565491__jakegwizdak__wind-loop.mp3" type="AudioStream" id=1]
+[ext_resource path="res://addons/godot-xr-tools/assets/RightHand.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/godot-xr-tools/functions/Function_Direct_movement.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/godot-openxr/scenes/first_person_controller_vr.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/godot-xr-tools/assets/PlayerBody.tscn" type="PackedScene" id=5]
+[ext_resource path="res://addons/godot-xr-tools/functions/Function_Flight_movement.tscn" type="PackedScene" id=6]
+[ext_resource path="res://addons/godot-xr-tools/assets/LeftHand.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/godot-xr-tools/functions/Function_Pickup.tscn" type="PackedScene" id=8]
+[ext_resource path="res://addons/godot-xr-tools/functions/Function_Glide_movement.tscn" type="PackedScene" id=9]
+[ext_resource path="res://game/player/PlayerSounds.gd" type="Script" id=10]
+[ext_resource path="res://assets/freesound.org/146770__qubodup__rocket-boost-engine-loop.mp3" type="AudioStream" id=11]
+[ext_resource path="res://addons/godot-xr-tools/functions/Function_Climb_movement.tscn" type="PackedScene" id=12]
+[ext_resource path="res://addons/godot-xr-tools/overrides/GroundPhysicsSettings.gd" type="Script" id=13]
+[ext_resource path="res://addons/godot-xr-tools/functions/Function_Jump_movement.tscn" type="PackedScene" id=14]
+[ext_resource path="res://addons/godot-xr-tools/functions/Function_JumpDetect_movement.tscn" type="PackedScene" id=15]
+[ext_resource path="res://assets/freepd.com/Epic Blockbuster 2.mp3" type="AudioStream" id=16]
+[ext_resource path="res://game/player/fuel_gauge/FuelGauge.tscn" type="PackedScene" id=17]
+[ext_resource path="res://game/player/PlayerRules.gd" type="Script" id=18]
+[ext_resource path="res://assets/freesound.org/570462__nuclearboy__delta-7-detonation-alarm.mp3" type="AudioStream" id=19]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 13 )
+flags = 0
+move_drag = 5.0
+move_traction = 30.0
+stop_on_slope = true
+move_max_slope = 70.0
+jump_max_slope = 70.0
+jump_velocity = 3.0
+
+[node name="Player" instance=ExtResource( 4 )]
+
+[node name="Configuration" parent="." index="0"]
+color_space = 0
+refresh_rate = 0.0
+
+[node name="ARVRCamera" parent="." index="1"]
+far = 600.0
+
+[node name="LeftHand" parent="LeftHandController" index="0" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03, -0.05, 0.15 )
+
+[node name="Function_Direct_movement" parent="LeftHandController" index="1" instance=ExtResource( 3 )]
+smooth_rotation = true
+max_speed = 3.0
+move_type = 1
+
+[node name="Function_Pickup" parent="LeftHandController" index="2" instance=ExtResource( 8 )]
+pickup_range = 0.2
+
+[node name="Function_Jump_movement" parent="LeftHandController" index="3" instance=ExtResource( 14 )]
+jump_button_id = 7
+
+[node name="FuelGauge" parent="LeftHandController" index="4" instance=ExtResource( 17 )]
+transform = Transform( 0.939693, -0.34202, 0, 0.321394, 0.883022, -0.34202, 0.116978, 0.321394, 0.939693, -0.05, 0, 0.2 )
+
+[node name="RightHand" parent="RightHandController" index="0" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03, -0.05, 0.15 )
+
+[node name="Function_Direct_movement" parent="RightHandController" index="1" instance=ExtResource( 3 )]
+smooth_rotation = true
+max_speed = 3.0
+
+[node name="Function_Pickup" parent="RightHandController" index="2" instance=ExtResource( 8 )]
+pickup_range = 0.2
+
+[node name="Function_Jump_movement" parent="RightHandController" index="3" instance=ExtResource( 14 )]
+jump_button_id = 7
+
+[node name="PlayerBody" parent="." index="4" instance=ExtResource( 5 )]
+push_rigid_bodies = false
+physics = SubResource( 1 )
+
+[node name="Function_Climb_movement" parent="." index="5" instance=ExtResource( 12 )]
+fling_multiplier = 2.0
+left_pickup = NodePath("../LeftHandController/Function_Pickup")
+right_pickup = NodePath("../RightHandController/Function_Pickup")
+
+[node name="Function_Flight_movement" parent="." index="6" instance=ExtResource( 6 )]
+bearing = 0
+speed_scale = 0.0
+speed_traction = 0.0
+acceleration_scale = 20.0
+guidance = 1.0
+exclusive = false
+
+[node name="Function_JumpDetect_Movement" parent="." index="7" instance=ExtResource( 15 )]
+
+[node name="Function_Glide_movement" parent="." index="8" instance=ExtResource( 9 )]
+
+[node name="PlayerSounds" type="Spatial" parent="." index="9"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0 )
+script = ExtResource( 10 )
+
+[node name="FlightSound" type="AudioStreamPlayer3D" parent="PlayerSounds" index="0"]
+stream = ExtResource( 11 )
+
+[node name="GlideSound" type="AudioStreamPlayer3D" parent="PlayerSounds" index="1"]
+stream = ExtResource( 1 )
+unit_db = -11.282
+
+[node name="GameMusic" type="AudioStreamPlayer3D" parent="PlayerSounds" index="2"]
+stream = ExtResource( 16 )
+attenuation_model = 3
+unit_db = -5.128
+autoplay = true
+
+[node name="LowFuelAlarmSound" type="AudioStreamPlayer3D" parent="PlayerSounds" index="3"]
+stream = ExtResource( 19 )
+
+[node name="PlayerRules" type="Node" parent="." index="10"]
+script = ExtResource( 18 )
+
+[connection signal="flight_finished" from="Function_Flight_movement" to="PlayerSounds" method="_on_flight_finished"]
+[connection signal="flight_started" from="Function_Flight_movement" to="PlayerSounds" method="_on_flight_started"]
+[connection signal="player_glide_end" from="Function_Glide_movement" to="PlayerSounds" method="_on_glide_finished"]
+[connection signal="player_glide_start" from="Function_Glide_movement" to="PlayerSounds" method="_on_glide_started"]

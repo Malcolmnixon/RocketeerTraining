@@ -1,0 +1,202 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://game/blimp/BalloonMaterial.tres" type="Material" id=1]
+[ext_resource path="res://game/blimp/MetalPlatesMaterial.tres" type="Material" id=2]
+[ext_resource path="res://game/blimp/StrutMaterial.tres" type="Material" id=3]
+[ext_resource path="res://addons/godot-xr-tools/objects/Object_climbable.gd" type="Script" id=4]
+[ext_resource path="res://game/fuel/FuelSpawn.tscn" type="PackedScene" id=5]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 8.0
+height = 32.0
+
+[sub_resource type="CapsuleMesh" id=2]
+radius = 8.0
+mid_height = 32.0
+radial_segments = 16
+rings = 3
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 8, 0.25, 30 )
+
+[sub_resource type="CubeMesh" id=4]
+size = Vector3( 16, 0.5, 60 )
+
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 10, 0.25, 1 )
+
+[sub_resource type="CubeMesh" id=6]
+size = Vector3( 20, 0.5, 2 )
+
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 4, 0.25, 8 )
+
+[sub_resource type="CubeMesh" id=8]
+size = Vector3( 8, 0.5, 16 )
+
+[sub_resource type="CylinderShape" id=9]
+radius = 0.3
+height = 14.0
+
+[sub_resource type="CylinderMesh" id=10]
+top_radius = 0.3
+bottom_radius = 0.3
+height = 14.0
+radial_segments = 12
+rings = 0
+
+[node name="Blimp" type="Spatial"]
+
+[node name="BalloonLeft" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 16, 0 )
+script = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="BalloonLeft"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="BalloonLeft"]
+mesh = SubResource( 2 )
+material/0 = ExtResource( 1 )
+
+[node name="BalloonRight" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 16, 0 )
+script = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="BalloonRight"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="BalloonRight"]
+mesh = SubResource( 2 )
+material/0 = ExtResource( 1 )
+
+[node name="RunwayLeft" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 0 )
+script = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="RunwayLeft"]
+shape = SubResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="RunwayLeft"]
+mesh = SubResource( 4 )
+material/0 = ExtResource( 2 )
+
+[node name="RunwayRight" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 0 )
+script = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="RunwayRight"]
+shape = SubResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="RunwayRight"]
+mesh = SubResource( 4 )
+material/0 = ExtResource( 2 )
+
+[node name="FrontWalkway" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9 )
+script = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="FrontWalkway"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="FrontWalkway"]
+mesh = SubResource( 6 )
+material/0 = ExtResource( 2 )
+
+[node name="BackWalkway" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9 )
+script = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="BackWalkway"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="BackWalkway"]
+mesh = SubResource( 6 )
+material/0 = ExtResource( 2 )
+
+[node name="OfficeFloor" type="StaticBody" parent="."]
+script = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="OfficeFloor"]
+shape = SubResource( 7 )
+
+[node name="MeshInstance" type="MeshInstance" parent="OfficeFloor"]
+mesh = SubResource( 8 )
+material/0 = ExtResource( 2 )
+
+[node name="BalloonStrut" type="StaticBody" parent="."]
+transform = Transform( 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, 10, 6.9, 0 )
+script = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="BalloonStrut"]
+shape = SubResource( 9 )
+
+[node name="MeshInstance" type="MeshInstance" parent="BalloonStrut"]
+mesh = SubResource( 10 )
+material/0 = ExtResource( 3 )
+
+[node name="BalloonStrut2" type="StaticBody" parent="."]
+transform = Transform( 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, 10, 6.9, 16 )
+script = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="BalloonStrut2"]
+shape = SubResource( 9 )
+
+[node name="MeshInstance" type="MeshInstance" parent="BalloonStrut2"]
+mesh = SubResource( 10 )
+material/0 = ExtResource( 3 )
+
+[node name="BalloonStrut3" type="StaticBody" parent="."]
+transform = Transform( 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, 10, 6.9, -16 )
+script = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="BalloonStrut3"]
+shape = SubResource( 9 )
+
+[node name="MeshInstance" type="MeshInstance" parent="BalloonStrut3"]
+mesh = SubResource( 10 )
+material/0 = ExtResource( 3 )
+
+[node name="BalloonStrut7" type="StaticBody" parent="."]
+transform = Transform( -0.965926, 0.258819, -8.74228e-08, 0.258819, 0.965926, 0, 8.44439e-08, -2.26267e-08, -1, -10, 6.9, 0 )
+script = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="BalloonStrut7"]
+shape = SubResource( 9 )
+
+[node name="MeshInstance" type="MeshInstance" parent="BalloonStrut7"]
+mesh = SubResource( 10 )
+material/0 = ExtResource( 3 )
+
+[node name="BalloonStrut8" type="StaticBody" parent="."]
+transform = Transform( -0.965926, 0.258819, -8.74228e-08, 0.258819, 0.965926, 0, 8.44439e-08, -2.26267e-08, -1, -10, 6.9, 16 )
+script = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="BalloonStrut8"]
+shape = SubResource( 9 )
+
+[node name="MeshInstance" type="MeshInstance" parent="BalloonStrut8"]
+mesh = SubResource( 10 )
+material/0 = ExtResource( 3 )
+
+[node name="BalloonStrut9" type="StaticBody" parent="."]
+transform = Transform( -0.965926, 0.258819, -8.74228e-08, 0.258819, 0.965926, 0, 8.44439e-08, -2.26267e-08, -1, -10, 6.9, -16 )
+script = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="BalloonStrut9"]
+shape = SubResource( 9 )
+
+[node name="MeshInstance" type="MeshInstance" parent="BalloonStrut9"]
+mesh = SubResource( 10 )
+material/0 = ExtResource( 3 )
+
+[node name="FuelSpawn" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5239, 0.750025, -0.513674 )
+
+[node name="FuelSpawn2" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8149, 0.750008, -15.0126 )
+
+[node name="FuelSpawn3" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2593, 0.750004, 16.9616 )
+
+[node name="FuelSpawn4" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03939, 0.750006, 5.0918 )

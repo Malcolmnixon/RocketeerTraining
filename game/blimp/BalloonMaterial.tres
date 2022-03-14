@@ -1,0 +1,9 @@
+[gd_resource type="SpatialMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://assets/ambientcg.com/Fabric048/Fabric048_1K_Color.jpg" type="Texture" id=1]
+
+[resource]
+albedo_color = Color( 0.709804, 0.709804, 0.709804, 1 )
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 0.2, 0.2, 0.2 )
+uv1_triplanar = true

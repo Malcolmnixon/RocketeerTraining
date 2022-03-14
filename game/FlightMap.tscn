@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/opengameart.org/stormy_clouds.png" type="Texture" id=1]
+[ext_resource path="res://game/player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://game/blimp/Blimp.tscn" type="PackedScene" id=3]
+[ext_resource path="res://game/target/TargetSpawn.tscn" type="PackedScene" id=4]
+[ext_resource path="res://game/balloon/Balloon.tscn" type="PackedScene" id=5]
+
+[sub_resource type="PanoramaSky" id=1]
+panorama = ExtResource( 1 )
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 1 )
+
+[node name="FlightMap" type="Spatial"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+
+[node name="TargetSpawn" parent="." instance=ExtResource( 4 )]
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 39, 0 )
+
+[node name="Blimp" parent="." instance=ExtResource( 3 )]
+
+[node name="Balloon" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -98, 0 )
+
+[node name="Balloon2" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -181, 60, -192 )
+
+[node name="Balloon3" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 167, 12, -3 )
+
+[node name="Balloon4" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -96, 12, 108 )

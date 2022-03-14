@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://game/fuel/Fuel.gd" type="Script" id=1]
+[ext_resource path="res://assets/freesound.org/221488__lloydevans09__glug.mp3" type="AudioStream" id=2]
+
+[sub_resource type="CylinderShape" id=1]
+radius = 0.3
+height = 1.0
+
+[sub_resource type="CylinderMesh" id=2]
+top_radius = 0.3
+bottom_radius = 0.3
+height = 1.0
+radial_segments = 16
+rings = 0
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.196078, 0.541176, 0.878431, 1 )
+metallic = 0.6
+metallic_specular = 0.8
+
+[node name="Fuel" type="RigidBody"]
+mode = 1
+script = ExtResource( 1 )
+reset_transform_on_pickup = false
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="GlugSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 2 )

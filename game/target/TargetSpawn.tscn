@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://game/target/TargetSpawn.gd" type="Script" id=1]
+[ext_resource path="res://assets/freesound.org/171671__leszek-szary__success-1.mp3" type="AudioStream" id=2]
+
+[node name="TargetSpawn" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="SuccessSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 2 )
+attenuation_model = 3

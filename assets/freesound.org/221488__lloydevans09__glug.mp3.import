@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/221488__lloydevans09__glug.mp3-7472ae9ad481dd492394ad3820d0816f.mp3str"
+
+[deps]
+
+source_file="res://assets/freesound.org/221488__lloydevans09__glug.mp3"
+dest_files=[ "res://.import/221488__lloydevans09__glug.mp3-7472ae9ad481dd492394ad3820d0816f.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
