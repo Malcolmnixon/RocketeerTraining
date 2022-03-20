@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://game/fuel/Fuel.gd" type="Script" id=1]
 [ext_resource path="res://assets/freesound.org/221488__lloydevans09__glug.mp3" type="AudioStream" id=2]
+[ext_resource path="res://addons/godot-xr-tools/objects/highlight/highlight_ring.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CylinderShape" id=1]
 radius = 0.3
@@ -19,6 +20,9 @@ albedo_color = Color( 0.196078, 0.541176, 0.878431, 1 )
 metallic = 0.6
 metallic_specular = 0.8
 
+[sub_resource type="QuadMesh" id=4]
+size = Vector2( 0.2, 0.2 )
+
 [node name="Fuel" type="RigidBody"]
 mode = 1
 script = ExtResource( 1 )
@@ -33,3 +37,6 @@ material/0 = SubResource( 3 )
 
 [node name="GlugSound" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 2 )
+
+[node name="XRTHighlightRing" parent="." instance=ExtResource( 3 )]
+mesh = SubResource( 4 )

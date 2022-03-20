@@ -48,7 +48,8 @@ max_speed = 3.0
 move_type = 1
 
 [node name="Function_Pickup" parent="LeftHandController" index="2" instance=ExtResource( 8 )]
-pickup_range = 0.2
+ranged_distance = 10.0
+ranged_angle = 10.0
 
 [node name="Function_Jump_movement" parent="LeftHandController" index="3" instance=ExtResource( 14 )]
 jump_button_id = 7
@@ -64,7 +65,8 @@ smooth_rotation = true
 max_speed = 3.0
 
 [node name="Function_Pickup" parent="RightHandController" index="2" instance=ExtResource( 8 )]
-pickup_range = 0.2
+ranged_distance = 10.0
+ranged_angle = 10.0
 
 [node name="Function_Jump_movement" parent="RightHandController" index="3" instance=ExtResource( 14 )]
 jump_button_id = 7
