@@ -35,6 +35,11 @@ _global_script_classes=[ {
 "path": "res://addons/godot-xr-tools/functions/Function_Glide_movement.gd"
 }, {
 "base": "MovementProvider",
+"class": "Function_Grapple",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/functions/Function_Grapple_movement.gd"
+}, {
+"base": "MovementProvider",
 "class": "Function_Jump",
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/functions/Function_Jump_movement.gd"
@@ -48,6 +53,11 @@ _global_script_classes=[ {
 "class": "Function_Pickup",
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/functions/Function_Pickup.gd"
+}, {
+"base": "MovementProvider",
+"class": "Function_TurnMovement",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/functions/Function_Turn_movement.gd"
 }, {
 "base": "MovementProvider",
 "class": "Function_WindMovement",
@@ -115,6 +125,11 @@ _global_script_classes=[ {
 "path": "res://addons/godot-xr-tools/objects/highlight/highlight_visible.gd"
 }, {
 "base": "Area",
+"class": "XRTSnapZone",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/objects/Snap_Zone.gd"
+}, {
+"base": "Area",
 "class": "XRToolsInteractableArea",
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/objects/Interactable_area.gd"
@@ -135,9 +150,11 @@ _global_script_class_icons={
 "Function_DirectMovement": "",
 "Function_FlightMovement": "",
 "Function_Glide": "",
+"Function_Grapple": "",
 "Function_Jump": "",
 "Function_JumpDetect": "",
 "Function_Pickup": "",
+"Function_TurnMovement": "",
 "Function_WindMovement": "",
 "GroundPhysics": "",
 "GroundPhysicsSettings": "",
@@ -151,6 +168,7 @@ _global_script_class_icons={
 "XRTHighlightMaterial": "",
 "XRTHighlightRing": "",
 "XRTHighlightVisible": "",
+"XRTSnapZone": "",
 "XRToolsInteractableArea": "",
 "XRToolsInteractableBody": "",
 "XRToolsPickable": ""

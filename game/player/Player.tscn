@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://assets/freesound.org/565491__jakegwizdak__wind-loop.mp3" type="AudioStream" id=1]
 [ext_resource path="res://addons/godot-xr-tools/assets/RightHand.tscn" type="PackedScene" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://game/player/fuel_gauge/FuelGauge.tscn" type="PackedScene" id=17]
 [ext_resource path="res://game/player/PlayerRules.gd" type="Script" id=18]
 [ext_resource path="res://assets/freesound.org/570462__nuclearboy__delta-7-detonation-alarm.mp3" type="AudioStream" id=19]
+[ext_resource path="res://addons/godot-xr-tools/functions/Function_Turn_movement.tscn" type="PackedScene" id=20]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 13 )
@@ -43,9 +44,8 @@ far = 600.0
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03, -0.05, 0.15 )
 
 [node name="Function_Direct_movement" parent="LeftHandController" index="1" instance=ExtResource( 3 )]
-smooth_rotation = true
 max_speed = 3.0
-move_type = 1
+strafe = true
 
 [node name="Function_Pickup" parent="LeftHandController" index="2" instance=ExtResource( 8 )]
 ranged_distance = 10.0
@@ -61,7 +61,6 @@ transform = Transform( 0.939693, -0.34202, 0, 0.321394, 0.883022, -0.34202, 0.11
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03, -0.05, 0.15 )
 
 [node name="Function_Direct_movement" parent="RightHandController" index="1" instance=ExtResource( 3 )]
-smooth_rotation = true
 max_speed = 3.0
 
 [node name="Function_Pickup" parent="RightHandController" index="2" instance=ExtResource( 8 )]
@@ -70,6 +69,9 @@ ranged_angle = 10.0
 
 [node name="Function_Jump_movement" parent="RightHandController" index="3" instance=ExtResource( 14 )]
 jump_button_id = 7
+
+[node name="Function_Turn_movement" parent="RightHandController" index="4" instance=ExtResource( 20 )]
+smooth_rotation = true
 
 [node name="PlayerBody" parent="." index="4" instance=ExtResource( 5 )]
 push_rigid_bodies = false
