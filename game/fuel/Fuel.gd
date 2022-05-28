@@ -1,7 +1,7 @@
 extends XRToolsPickable
 
 
-func pick_up(by: Spatial, with_controller: ARVRController) -> Spatial:
+func pick_up(by: Spatial, with_controller: ARVRController) -> void:
 	# Fill up the player fuel
 	GameState.player_fuel = 100.0
 
@@ -20,6 +20,4 @@ func pick_up(by: Spatial, with_controller: ARVRController) -> Spatial:
 	timer.connect("timeout", self, "drop_and_free")
 	timer.set_wait_time(3)
 	timer.start()
-	
-	# Return this object
-	return self
+
