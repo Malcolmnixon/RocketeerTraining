@@ -19,5 +19,5 @@ func _on_entrance_area_exited(_spatial):
 
 func _on_exit_area_entered(_spatial):
 	if _player_entrance:
-		emit_signal("target_passed")
+		GameSignals.emit_signal("target_passed")
 		queue_free()

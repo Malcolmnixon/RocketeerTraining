@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/IntroSpeech.mp3-97861c05adbd331c02b6e5ae254c7bc0.mp3str"
+
+[deps]
+
+source_file="res://game/audio/IntroSpeech.mp3"
+dest_files=[ "res://.import/IntroSpeech.mp3-97861c05adbd331c02b6e5ae254c7bc0.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

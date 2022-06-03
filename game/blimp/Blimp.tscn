@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://game/blimp/BalloonMaterial.tres" type="Material" id=1]
 [ext_resource path="res://game/blimp/MetalPlatesMaterial.tres" type="Material" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://game/blimp/PlanksMaterial.tres" type="Material" id=6]
 [ext_resource path="res://game/blimp/WoodSidingMaterial.tres" type="Material" id=7]
 [ext_resource path="res://addons/kenney_particle_pack/smoke_02.png" type="Texture" id=8]
+[ext_resource path="res://game/blimp/Blimp.gd" type="Script" id=9]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 8.0
@@ -20,8 +21,8 @@ radial_segments = 24
 rings = 3
 
 [sub_resource type="CylinderShape" id=9]
-radius = 0.3
 height = 14.0
+radius = 0.3
 
 [sub_resource type="CylinderMesh" id=10]
 top_radius = 0.3
@@ -48,6 +49,9 @@ extents = Vector3( 4, 0.25, 8 )
 [sub_resource type="CubeMesh" id=8]
 size = Vector3( 8, 0.5, 16 )
 
+[sub_resource type="BoxShape" id=28]
+extents = Vector3( 3.6, 1, 7.6 )
+
 [sub_resource type="BoxShape" id=11]
 extents = Vector3( 2, 0.25, 5 )
 
@@ -55,8 +59,8 @@ extents = Vector3( 2, 0.25, 5 )
 size = Vector3( 4, 0.5, 10 )
 
 [sub_resource type="CylinderShape" id=13]
-radius = 0.5
 height = 8.0
+radius = 0.5
 
 [sub_resource type="CylinderMesh" id=14]
 top_radius = 0.5
@@ -123,6 +127,7 @@ color_ramp = SubResource( 25 )
 [sub_resource type="QuadMesh" id=22]
 
 [node name="Blimp" type="Spatial"]
+script = ExtResource( 9 )
 
 [node name="Balloons" type="Spatial" parent="."]
 
@@ -338,6 +343,14 @@ height = 1.0
 depth = 16.2
 material = ExtResource( 7 )
 
+[node name="CabinArea" type="Area" parent="Cabin"]
+collision_layer = 0
+collision_mask = 524288
+
+[node name="CollisionShape" type="CollisionShape" parent="Cabin/CabinArea"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0 )
+shape = SubResource( 28 )
+
 [node name="Engine" type="Spatial" parent="."]
 
 [node name="Walkway" type="StaticBody" parent="Engine"]
@@ -431,3 +444,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2593, 0.750004, 16.9616 )
 
 [node name="FuelSpawn4" parent="Consumables" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.43939, 0.750006, 3.0918 )
+
+[connection signal="body_entered" from="Cabin/CabinArea" to="." method="_on_CabinArea_body_entered"]

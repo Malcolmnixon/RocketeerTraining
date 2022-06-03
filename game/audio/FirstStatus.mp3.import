@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/FirstStatus.mp3-dfe5a8be7129dc745dfcd56f039b93bb.mp3str"
+
+[deps]
+
+source_file="res://game/audio/FirstStatus.mp3"
+dest_files=[ "res://.import/FirstStatus.mp3-dfe5a8be7129dc745dfcd56f039b93bb.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

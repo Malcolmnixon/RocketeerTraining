@@ -182,6 +182,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
+GameSignals="*res://game/GameSignals.gd"
 GameState="*res://game/GameState.gd"
 
 [editor_plugins]

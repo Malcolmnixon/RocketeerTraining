@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/LandingSpeech.mp3-6f037edd0ae74a06a6e0db94c30b94f2.mp3str"
+
+[deps]
+
+source_file="res://game/audio/LandingSpeech.mp3"
+dest_files=[ "res://.import/LandingSpeech.mp3-6f037edd0ae74a06a6e0db94c30b94f2.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
