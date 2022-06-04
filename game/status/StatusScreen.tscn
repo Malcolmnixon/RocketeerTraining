@@ -1,71 +1,78 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://game/themes/RocketeerTrainingTitle.tres" type="Theme" id=1]
 [ext_resource path="res://game/themes/RocketeerTrainingStandard.tres" type="Theme" id=2]
 [ext_resource path="res://game/status/StatusScreen.gd" type="Script" id=3]
 [ext_resource path="res://assets/godotengine.org/icon_color.png" type="Texture" id=4]
+[ext_resource path="res://assets/oculus.com/Controllers.png" type="Texture" id=5]
 
 [node name="StatusScreen" type="Node2D"]
 script = ExtResource( 3 )
 
 [node name="Title" type="Label" parent="."]
-margin_right = 1024.0
+margin_right = 838.0
 margin_bottom = 102.0
 theme = ExtResource( 1 )
 text = "Rocketeer Training"
 align = 1
 
-[node name="StartButton" type="Button" parent="."]
-margin_left = 422.0
-margin_top = 400.0
-margin_right = 602.0
-margin_bottom = 467.0
-theme = ExtResource( 2 )
-text = "Start"
-
 [node name="MadeWithGodot" type="Label" parent="."]
-margin_left = 498.0
-margin_top = 497.0
-margin_right = 873.0
-margin_bottom = 558.0
+margin_left = 542.0
+margin_top = 115.0
+margin_right = 917.0
+margin_bottom = 176.0
 theme = ExtResource( 2 )
 text = "Made with Godot"
 
 [node name="GodotIcon" type="Sprite" parent="."]
-position = Vector2( 943, 527 )
+position = Vector2( 971, 133.2 )
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 4 )
 
 [node name="LastScoreLabel" type="Label" parent="."]
-margin_left = 317.0
-margin_top = 178.0
-margin_right = 562.0
-margin_bottom = 239.0
+margin_left = 616.0
+margin_top = 267.0
+margin_right = 861.0
+margin_bottom = 328.0
 theme = ExtResource( 2 )
 text = "Last Score:"
 
 [node name="LastScoreValue" type="Label" parent="."]
-margin_left = 579.0
-margin_top = 178.0
-margin_right = 693.0
-margin_bottom = 239.0
+margin_left = 877.0
+margin_top = 267.0
+margin_right = 991.0
+margin_bottom = 328.0
 theme = ExtResource( 2 )
 text = "000"
 
 [node name="BestScoreLabel" type="Label" parent="."]
-margin_left = 311.0
-margin_top = 251.0
-margin_right = 562.0
-margin_bottom = 312.0
+margin_left = 610.0
+margin_top = 340.0
+margin_right = 861.0
+margin_bottom = 401.0
 theme = ExtResource( 2 )
 text = "Best Score:"
 
 [node name="BestScoreValue" type="Label" parent="."]
-margin_left = 577.0
-margin_top = 251.0
-margin_right = 691.0
-margin_bottom = 312.0
+margin_left = 876.0
+margin_top = 340.0
+margin_right = 990.0
+margin_bottom = 401.0
 theme = ExtResource( 2 )
 text = "000"
+
+[node name="StartButton" type="Button" parent="."]
+margin_left = 716.0
+margin_top = 456.0
+margin_right = 896.0
+margin_bottom = 523.0
+theme = ExtResource( 2 )
+text = "Start"
+
+[node name="Controllers" type="Sprite" parent="."]
+modulate = Color( 0.709804, 0.709804, 0.709804, 0.752941 )
+position = Vector2( 304.178, 421.052 )
+scale = Vector2( 0.740128, 0.818628 )
+texture = ExtResource( 5 )
 
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
