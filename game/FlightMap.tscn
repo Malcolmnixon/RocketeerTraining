@@ -34,7 +34,7 @@ environment = SubResource( 2 )
 [node name="Blimp" parent="." instance=ExtResource( 3 )]
 
 [node name="StatusScreen" parent="." instance=ExtResource( 13 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, -1.5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, -1.3 )
 screen_size = Vector2( 2.048, 1.2 )
 viewport_size = Vector2( 1024, 600 )
 scene = ExtResource( 12 )
