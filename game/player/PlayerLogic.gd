@@ -8,7 +8,7 @@ var alive := true
 onready var flight: Function_FlightMovement = $"../Function_Flight_movement"
 
 # Get the low fuel alarm
-onready var low_fuel_alarm_sound: AudioStreamPlayer3D = $LowFuelAlarmSound
+onready var low_fuel_alarm_sound: AudioStreamPlayer = $LowFuelAlarmSound
 
 
 func _ready():

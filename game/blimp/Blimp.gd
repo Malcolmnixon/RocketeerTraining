@@ -16,5 +16,5 @@ func _ready():
 #	pass
 
 
-func _on_CabinArea_body_entered(body):
+func _on_CabinArea_body_entered(_body):
 	GameSignals.emit_signal("player_entered_cabin")
