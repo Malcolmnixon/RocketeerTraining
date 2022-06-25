@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://game/themes/RocketeerTrainingTitle.tres" type="Theme" id=1]
 [ext_resource path="res://game/themes/RocketeerTrainingStandard.tres" type="Theme" id=2]
 [ext_resource path="res://game/status/StatusScreen.gd" type="Script" id=3]
 [ext_resource path="res://assets/godotengine.org/icon_color.png" type="Texture" id=4]
 [ext_resource path="res://assets/oculus.com/Controllers.png" type="Texture" id=5]
+[ext_resource path="res://game/themes/RocketeerTrainingAbout.tres" type="Theme" id=6]
 
 [node name="StatusScreen" type="Node2D"]
 script = ExtResource( 3 )
@@ -16,7 +17,9 @@ theme = ExtResource( 1 )
 text = "Rocketeer Training"
 align = 1
 
-[node name="MadeWithGodot" type="Label" parent="."]
+[node name="MainPage" type="Node2D" parent="."]
+
+[node name="MadeWithGodot" type="Label" parent="MainPage"]
 margin_left = 542.0
 margin_top = 115.0
 margin_right = 917.0
@@ -24,12 +27,12 @@ margin_bottom = 176.0
 theme = ExtResource( 2 )
 text = "Made with Godot"
 
-[node name="GodotIcon" type="Sprite" parent="."]
+[node name="GodotIcon" type="Sprite" parent="MainPage"]
 position = Vector2( 971, 133.2 )
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 4 )
 
-[node name="LastScoreLabel" type="Label" parent="."]
+[node name="LastScoreLabel" type="Label" parent="MainPage"]
 margin_left = 616.0
 margin_top = 267.0
 margin_right = 861.0
@@ -37,7 +40,7 @@ margin_bottom = 328.0
 theme = ExtResource( 2 )
 text = "Last Score:"
 
-[node name="LastScoreValue" type="Label" parent="."]
+[node name="LastScoreValue" type="Label" parent="MainPage"]
 margin_left = 877.0
 margin_top = 267.0
 margin_right = 991.0
@@ -45,7 +48,7 @@ margin_bottom = 328.0
 theme = ExtResource( 2 )
 text = "000"
 
-[node name="BestScoreLabel" type="Label" parent="."]
+[node name="BestScoreLabel" type="Label" parent="MainPage"]
 margin_left = 610.0
 margin_top = 340.0
 margin_right = 861.0
@@ -53,7 +56,7 @@ margin_bottom = 401.0
 theme = ExtResource( 2 )
 text = "Best Score:"
 
-[node name="BestScoreValue" type="Label" parent="."]
+[node name="BestScoreValue" type="Label" parent="MainPage"]
 margin_left = 876.0
 margin_top = 340.0
 margin_right = 990.0
@@ -61,18 +64,58 @@ margin_bottom = 401.0
 theme = ExtResource( 2 )
 text = "000"
 
-[node name="StartButton" type="Button" parent="."]
-margin_left = 716.0
-margin_top = 456.0
-margin_right = 896.0
-margin_bottom = 523.0
+[node name="StartButton" type="Button" parent="MainPage"]
+margin_left = 705.0
+margin_top = 433.0
+margin_right = 885.0
+margin_bottom = 500.0
 theme = ExtResource( 2 )
 text = "Start"
 
-[node name="Controllers" type="Sprite" parent="."]
+[node name="AboutButton" type="Button" parent="MainPage"]
+margin_left = 705.0
+margin_top = 515.0
+margin_right = 885.0
+margin_bottom = 582.0
+theme = ExtResource( 2 )
+text = "About"
+
+[node name="Controllers" type="Sprite" parent="MainPage"]
 modulate = Color( 0.709804, 0.709804, 0.709804, 0.752941 )
 position = Vector2( 304.178, 421.052 )
 scale = Vector2( 0.740128, 0.818628 )
 texture = ExtResource( 5 )
 
-[connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
+[node name="AboutPage" type="Node2D" parent="."]
+visible = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="AboutPage"]
+margin_left = 31.0
+margin_top = 100.0
+margin_right = 986.0
+margin_bottom = 486.0
+theme = ExtResource( 6 )
+text = "Version: 0.0.2
+By: Malcolm Nixon
+Code: github.com/Malcolmnixon/RocketeerTraining
+Engine: godotengine.org
+Textures: ambientcg.com, opengameart.org
+Music: freepd.com (Rafael Krux)
+Voice: Samuel Sarette
+Sound Effects: freesound.org
+Font: google.com
+License: MIT
+
+"
+
+[node name="BackButton" type="Button" parent="AboutPage"]
+margin_left = 829.0
+margin_top = 518.0
+margin_right = 1009.0
+margin_bottom = 585.0
+theme = ExtResource( 2 )
+text = "Back"
+
+[connection signal="pressed" from="MainPage/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="MainPage/AboutButton" to="." method="_on_AboutButton_pressed"]
+[connection signal="pressed" from="AboutPage/BackButton" to="." method="_on_BackButton_pressed"]
