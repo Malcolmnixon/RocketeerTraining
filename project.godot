@@ -20,9 +20,19 @@ _global_script_classes=[ {
 "path": "res://addons/godot-xr-tools/functions/Function_Climb_movement.gd"
 }, {
 "base": "MovementProvider",
+"class": "Function_CrouchMovement",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/functions/Function_Crouch_movement.gd"
+}, {
+"base": "MovementProvider",
 "class": "Function_DirectMovement",
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/functions/Function_Direct_movement.gd"
+}, {
+"base": "MovementProvider",
+"class": "Function_FallDamage",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/examples/Function_Fall_damage.gd"
 }, {
 "base": "MovementProvider",
 "class": "Function_FlightMovement",
@@ -129,6 +139,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/objects/Snap_Zone.gd"
 }, {
+"base": "Spatial",
+"class": "XRToolsHand",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/assets/Hand.gd"
+}, {
+"base": "BoneAttachment",
+"class": "XRToolsHandPhysicsBone",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/assets/HandPhysicsBone.gd"
+}, {
 "base": "Area",
 "class": "XRToolsInteractableArea",
 "language": "GDScript",
@@ -139,6 +159,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/objects/Interactable_body.gd"
 }, {
+"base": "XRToolsHand",
+"class": "XRToolsPhysicsHand",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/assets/PhysicsHand.gd"
+}, {
 "base": "RigidBody",
 "class": "XRToolsPickable",
 "language": "GDScript",
@@ -147,7 +172,9 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "ARVRHelpers": "",
 "Function_ClimbMovement": "",
+"Function_CrouchMovement": "",
 "Function_DirectMovement": "",
+"Function_FallDamage": "",
 "Function_FlightMovement": "",
 "Function_Glide": "",
 "Function_Grapple": "",
@@ -169,8 +196,11 @@ _global_script_class_icons={
 "XRTHighlightRing": "",
 "XRTHighlightVisible": "",
 "XRTSnapZone": "",
+"XRToolsHand": "",
+"XRToolsHandPhysicsBone": "",
 "XRToolsInteractableArea": "",
 "XRToolsInteractableBody": "",
+"XRToolsPhysicsHand": "",
 "XRToolsPickable": ""
 }
 
