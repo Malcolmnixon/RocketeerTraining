@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://addons/godot-xr-tools/objects/Object_climbable.gd" type="Script" id=1]
+[ext_resource path="res://addons/godot-xr-tools/objects/climbable.gd" type="Script" id=1]
 [ext_resource path="res://game/blimp/StrutMaterial.tres" type="Material" id=2]
 [ext_resource path="res://game/blimp/MetalPlatesMaterial.tres" type="Material" id=3]
 [ext_resource path="res://game/blimp/BalloonMaterial.tres" type="Material" id=4]

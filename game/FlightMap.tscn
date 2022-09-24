@@ -12,7 +12,7 @@
 [ext_resource path="res://game/audio/FirstStatus.mp3" type="AudioStream" id=10]
 [ext_resource path="res://game/audio/LandingSpeech.mp3" type="AudioStream" id=11]
 [ext_resource path="res://game/status/StatusScreen.tscn" type="PackedScene" id=12]
-[ext_resource path="res://addons/godot-xr-tools/objects/Viewport_2D_in_3D.tscn" type="PackedScene" id=13]
+[ext_resource path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" type="PackedScene" id=13]
 
 [sub_resource type="PanoramaSky" id=1]
 panorama = ExtResource( 1 )

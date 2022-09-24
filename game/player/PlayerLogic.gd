@@ -5,7 +5,7 @@ extends Spatial
 var alive := true
 
 # Get the flight movement node
-onready var flight: Function_FlightMovement = $"../Function_Flight_movement"
+onready var flight: XRToolsFlightMovement = $"../MovementFlight"
 
 # Get the low fuel alarm
 onready var low_fuel_alarm_sound: AudioStreamPlayer = $LowFuelAlarmSound
@@ -31,7 +31,7 @@ func _process(delta: float):
 		low_fuel_alarm_sound.stop()
 
 	# Disable flying when out of fuel
-	$"../Function_Flight_movement".enabled = GameState.player_fuel > 0
+	$"../MovementFlight".enabled = GameState.player_fuel > 0
 	
 	# Report death by being lost
 	if alive and $"../PlayerBody/KinematicBody".global_transform.origin.length_squared() > 300*300:
@@ -41,17 +41,17 @@ func _process(delta: float):
 
 func _on_game_started():
 	# Disable menu control
-	$"../RightHandController/Function_pointer".enabled = false
+	$"../RightHandController/FunctionPointer".enabled = false
 
 	# Enable game control
-	$"../LeftHandController/Function_Direct_movement".enabled = true
-	$"../LeftHandController/Function_Jump_movement".enabled = true
-	$"../RightHandController/Function_Direct_movement".enabled = true
-	$"../RightHandController/Function_Jump_movement".enabled = true
-	$"../Function_Climb_movement".enabled = true
-	$"../Function_Flight_movement".enabled = true
-	$"../Function_JumpDetect_Movement".enabled = true
-	$"../Function_Glide_movement".enabled = true
+	$"../LeftHandController/MovementDirect".enabled = true
+	$"../LeftHandController/MovementJump".enabled = true
+	$"../RightHandController/MovementDirect".enabled = true
+	$"../RightHandController/MovementJump".enabled = true
+	$"../MovementClimb".enabled = true
+	$"../MovementFlight".enabled = true
+	$"../MovementJumpDetect".enabled = true
+	$"../MovementGlide".enabled = true
 
 
 func _on_flight_started():
