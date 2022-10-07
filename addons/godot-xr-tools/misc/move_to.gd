@@ -8,7 +8,7 @@ extends Node
 ## @desc:
 ##     This node moves a control Spatial to the specified target Spatial
 ##     at a requested speed.
-## 
+##
 
 
 ## Signal invoked when the move finishes
@@ -16,16 +16,16 @@ signal move_complete
 
 
 # Spatial to control
-var _control: Spatial
+var _control: Node3D
 
 # Spatial representing the target
-var _target: Spatial
+var _target: Node3D
 
 # Starting transform
-var _start: Transform
+var _start: Transform3D
 
 # Target offset
-var _offset: Transform
+var _offset: Transform3D
 
 # Move duration
 var _duration: float
@@ -44,10 +44,10 @@ func _init():
 func _process(delta: float) -> void:
 	# Calculate the destination
 	var destination := _target.global_transform * _offset
-	
+
 	# Update the move time
 	_time += delta
-	
+
 	# Detect end of move
 	if _time > _duration:
 		# Disable processing
@@ -62,20 +62,20 @@ func _process(delta: float) -> void:
 
 	# Interpolate to the target
 	_control.global_transform = _start.interpolate_with(
-		destination, 
+		destination,
 		_time / _duration)
 
 
 ## Start the move
-func start(var control: Spatial, var target: Spatial, var offset: Transform, var speed: float) -> void:
+func start(control: Node3D, target: Node3D, offset: Transform3D, speed: float) -> void:
 	# Save the control and target
 	_control = control
 	_target = target
 	_offset = offset
-	
+
 	# Save the starting transform
 	_start = control.global_transform
-	
+
 	# Calculate the duration
 	var destination := _target.global_transform * _offset
 	var distance := (destination.origin - _start.origin).length()

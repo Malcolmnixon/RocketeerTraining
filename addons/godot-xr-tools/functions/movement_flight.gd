@@ -1,5 +1,5 @@
-tool
-class_name XRToolsFlightMovement
+@tool
+class_name XRToolsMovementFlight
 extends XRToolsMovementProvider
 
 
@@ -39,25 +39,6 @@ signal flight_started()
 signal flight_finished()
 
 
-# enum our buttons, should find a way to put this more central
-enum Buttons {
-	VR_BUTTON_BY = 1,
-	VR_GRIP = 2,
-	VR_BUTTON_3 = 3,
-	VR_BUTTON_4 = 4,
-	VR_BUTTON_5 = 5,
-	VR_BUTTON_6 = 6,
-	VR_BUTTON_AX = 7,
-	VR_BUTTON_8 = 8,
-	VR_BUTTON_9 = 9,
-	VR_BUTTON_10 = 10,
-	VR_BUTTON_11 = 11,
-	VR_BUTTON_12 = 12,
-	VR_BUTTON_13 = 13,
-	VR_PAD = 14,
-	VR_TRIGGER = 15
-}
-
 # Enumeration of controller to use for flight
 enum FlightController {
 	LEFT,		# Use left controller
@@ -86,53 +67,56 @@ const HORIZONTAL := Vector3(1.0, 0.0, 1.0)
 
 
 ## Movement provider order
-export var order := 30
+@export var order : int = 30
 
 ## Flight controller
-export (FlightController) var controller: int = FlightController.LEFT
+@export var controller : FlightController = FlightController.LEFT
 
 ## Flight toggle button
-export (Buttons) var flight_button: int = Buttons.VR_BUTTON_BY
+@export var flight_button : String = "by_button"
 
 ## Flight pitch control
-export (FlightPitch) var pitch: int = FlightPitch.CONTROLLER
+@export var pitch : FlightPitch = FlightPitch.CONTROLLER
 
 ## Flight bearing control
-export (FlightBearing) var bearing: int = FlightBearing.CONTROLLER
+@export var bearing : FlightBearing = FlightBearing.CONTROLLER
 
 ## Flight speed from control
-export var speed_scale: float = 5.0
+@export var speed_scale : float = 5.0
 
 ## Flight traction pulling flight velocity towards the controlled speed
-export var speed_traction: float = 3.0
+@export var speed_traction : float = 3.0
 
 ## Flight acceleration from control
-export var acceleration_scale: float = 0.0
+@export var acceleration_scale : float = 0.0
 
 ## Flight drag
-export var drag: float = 0.1
+@export var drag : float = 0.1
 
 ## Guidance effect (virtual fins/wings)
-export var guidance: float = 0.0
+@export var guidance : float = 0.0
 
 ## Flight exclusive enable
-export var exclusive: bool = true
+@export var exclusive : bool = true
 
 
 # Flight button state
-var _flight_button: bool = false
+var _flight_button : bool = false
 
 # Flight controller
-var _controller: ARVRController
+var _controller : XRController3D
 
 
 # Node references
-onready var _camera: ARVRCamera = ARVRHelpers.get_arvr_camera(self)
-onready var _left_controller: ARVRController = ARVRHelpers.get_left_controller(self)
-onready var _right_controller: ARVRController = ARVRHelpers.get_right_controller(self)
+@onready var _camera : XRCamera3D = XRHelpers.get_xr_camera(self)
+@onready var _left_controller : XRController3D = XRHelpers.get_left_controller(self)
+@onready var _right_controller : XRController3D = XRHelpers.get_right_controller(self)
 
 
 func _ready():
+	# In Godot 4 we must now manually call our super class ready function
+	super._ready()
+
 	# Get the flight controller
 	if controller == FlightController.LEFT:
 		_controller = _left_controller
@@ -186,20 +170,20 @@ func physics_movement(delta: float, player_body: XRToolsPlayerBody, disabled: bo
 	var side := forwards.cross(Vector3.UP)
 
 	# Construct the target velocity
-	var joy_forwards := _controller.get_joystick_axis(1)
-	var joy_side := _controller.get_joystick_axis(0)
+	var joy_forwards := _controller.get_axis("primary").y
+	var joy_side := _controller.get_axis("primary").x
 	var heading := forwards * joy_forwards + side * joy_side
 
 	# Calculate the flight velocity
 	var flight_velocity := player_body.velocity
 	flight_velocity *= 1.0 - drag * delta
-	flight_velocity = lerp(flight_velocity, heading * speed_scale, speed_traction * delta)
+	flight_velocity = flight_velocity.lerp(heading * speed_scale, speed_traction * delta)
 	flight_velocity += heading * acceleration_scale * delta
 
 	# Apply virtual guidance effect
 	if guidance > 0.0:
 		var velocity_forwards := forwards * flight_velocity.length()
-		flight_velocity = lerp(flight_velocity, velocity_forwards, guidance * delta)
+		flight_velocity = flight_velocity.lerp(velocity_forwards, guidance * delta)
 
 	# If exclusive then perform the exclusive move-and-slide
 	if exclusive:
@@ -229,4 +213,4 @@ func set_flying(active: bool) -> void:
 # This method verifies the movement provider has a valid configuration.
 func _get_configuration_warning():
 	# Call base class
-	return ._get_configuration_warning()
+	return super._get_configuration_warning()

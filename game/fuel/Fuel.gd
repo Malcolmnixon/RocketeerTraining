@@ -1,23 +1,23 @@
 extends XRToolsPickable
 
 
-func pick_up(by: Spatial, with_controller: ARVRController) -> void:
+func pick_up(by: Node3D, with_controller: XRController3D) -> void:
 	# Fill up the player fuel
 	GameState.player_fuel = 100.0
 
 	# Convert to rigid before picking up
-	mode = RigidBody.MODE_RIGID
+	freeze = false
 	
 	# Start playing the glug sound (until deleted)
 	$GlugSound.play()
 
 	# Perform the pick_up
-	.pick_up(by, with_controller)
+	super.pick_up(by, with_controller)
 
 	# Schedule death in 3 seconds
 	var timer = Timer.new()
 	add_child(timer)
-	timer.connect("timeout", self, "drop_and_free")
+	timer.connect("timeout",Callable(self,"drop_and_free"))
 	timer.set_wait_time(3)
 	timer.start()
 

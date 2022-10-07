@@ -1,6 +1,6 @@
-extends Area
-
 class_name XRToolsInteractableArea
+extends Area3D
+
 
 signal pointer_pressed(at)
 signal pointer_released(at)

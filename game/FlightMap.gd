@@ -1,14 +1,14 @@
-extends Spatial
+extends Node3D
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Connect signals
-	GameSignals.connect("game_started", self, "_on_game_started")
-	GameSignals.connect("game_finished", self, "_on_game_finished")
-	GameSignals.connect("player_entered_cabin", self, "_on_player_entered_cabin")
-	GameSignals.connect("death_by_lost", self, "_on_death_by_lost")
-	GameSignals.connect("target_passed", self, "_on_target_passed")
+	GameSignals.connect("game_started",Callable(self,"_on_game_started"))
+	GameSignals.connect("game_finished",Callable(self,"_on_game_finished"))
+	GameSignals.connect("player_entered_cabin",Callable(self,"_on_player_entered_cabin"))
+	GameSignals.connect("death_by_lost",Callable(self,"_on_death_by_lost"))
+	GameSignals.connect("target_passed",Callable(self,"_on_target_passed"))
 
 
 func _on_game_started():

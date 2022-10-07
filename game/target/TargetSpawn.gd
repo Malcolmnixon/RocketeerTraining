@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 
 
 ## Signal indicating target has passed
@@ -52,8 +52,8 @@ func _spawn_target():
 	var roty: float = random.randf_range(0.0, 2*PI)
 	
 	# Create a new target
-	var target = target_scene.instance()
-	target.transform = Transform(Basis(Vector3.UP, roty), pos)
+	var target = target_scene.instantiate()
+	target.transform = Transform3D(Basis(Vector3.UP, roty), pos)
 	
 	# Add the target
 	add_child(target)

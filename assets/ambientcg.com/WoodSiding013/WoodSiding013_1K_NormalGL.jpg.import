@@ -1,37 +1,36 @@
 [remap]
 
 importer="texture"
-type="StreamTexture"
-path.s3tc="res://.import/WoodSiding013_1K_NormalGL.jpg-6267ccba043cc62b63771e7d23f11865.s3tc.stex"
-path.etc2="res://.import/WoodSiding013_1K_NormalGL.jpg-6267ccba043cc62b63771e7d23f11865.etc2.stex"
+type="CompressedTexture2D"
+uid="uid://bmln5fur0tdx8"
+path.s3tc="res://.godot/imported/WoodSiding013_1K_NormalGL.jpg-6267ccba043cc62b63771e7d23f11865.s3tc.ctex"
+path.etc2="res://.godot/imported/WoodSiding013_1K_NormalGL.jpg-6267ccba043cc62b63771e7d23f11865.etc2.ctex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
+"imported_formats": ["s3tc", "etc2"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/ambientcg.com/WoodSiding013/WoodSiding013_1K_NormalGL.jpg"
-dest_files=[ "res://.import/WoodSiding013_1K_NormalGL.jpg-6267ccba043cc62b63771e7d23f11865.s3tc.stex", "res://.import/WoodSiding013_1K_NormalGL.jpg-6267ccba043cc62b63771e7d23f11865.etc2.stex" ]
+dest_files=["res://.godot/imported/WoodSiding013_1K_NormalGL.jpg-6267ccba043cc62b63771e7d23f11865.s3tc.ctex", "res://.godot/imported/WoodSiding013_1K_NormalGL.jpg-6267ccba043cc62b63771e7d23f11865.etc2.ctex"]
 
 [params]
 
 compress/mode=2
 compress/lossy_quality=0.7
-compress/hdr_mode=0
+compress/hdr_compression=1
 compress/bptc_ldr=0
 compress/normal_map=1
-flags/repeat=true
-flags/filter=true
-flags/mipmaps=true
-flags/anisotropic=false
-flags/srgb=2
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
-process/HDR_as_SRGB=false
-process/invert_color=false
 process/normal_map_invert_y=false
-stream=false
-size_limit=0
-detect_3d=false
-svg/scale=1.0
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1

@@ -1,12 +1,13 @@
-tool
+@tool
 class_name XRToolsMovementGlide
 extends XRToolsMovementProvider
+
 
 ##
 ## Movement Provider for Gliding
 ##
 ## @desc:
-##     This script provides glide mechanics for the player. This script works 
+##     This script provides glide mechanics for the player. This script works
 ##     with the PlayerBody attached to the players ARVROrigin.
 ##
 ##     The player enables flying by moving the controllers apart further than
@@ -20,6 +21,7 @@ extends XRToolsMovementProvider
 ##     after any Direct movement providers responsible for turning.
 ##
 
+
 ## Signal invoked when the player starts gliding
 signal player_glide_start
 
@@ -32,30 +34,35 @@ const HORIZONTAL := Vector3(1.0, 0.0, 1.0)
 
 
 ## Movement provider order
-export var order := 35
+@export var order : int = 35
 
 ## Controller separation distance to register as glide
-export var glide_detect_distance := 1.0
+@export var glide_detect_distance : float = 1.0
 
 ## Minimum falling speed to be considered gliding
-export var glide_min_fall_speed = -1.5
+@export var glide_min_fall_speed : float = -1.5
 
 ## Glide falling speed
-export var glide_fall_speed := -2.0
+@export var glide_fall_speed : float = -2.0
 
 ## Glide forward speed
-export var glide_forward_speed := 12.0
+@export var glide_forward_speed : float = 12.0
 
 ## Slew rate to transition to gliding
-export var horizontal_slew_rate := 1.0
+@export var horizontal_slew_rate : float = 1.0
 
 ## Slew rate to transition to gliding
-export var vertical_slew_rate := 2.0
+@export var vertical_slew_rate : float = 2.0
 
 
 # Node references
-onready var _left_controller := ARVRHelpers.get_left_controller(self)
-onready var _right_controller := ARVRHelpers.get_right_controller(self)
+@onready var _left_controller := XRHelpers.get_left_controller(self)
+@onready var _right_controller := XRHelpers.get_right_controller(self)
+
+
+func _ready():
+	# In Godot 4 we must now manually call our super class ready function
+	super._ready()
 
 
 func physics_movement(delta: float, player_body: XRToolsPlayerBody, disabled: bool):
@@ -75,7 +82,7 @@ func physics_movement(delta: float, player_body: XRToolsPlayerBody, disabled: bo
 	var left_to_right := (right_position - left_position) * HORIZONTAL
 
 	# Set gliding based on hand separation
-	var separation := left_to_right.length() / ARVRServer.world_scale
+	var separation := left_to_right.length() / XRServer.world_scale
 	_set_gliding(separation >= glide_detect_distance)
 
 	# Skip if not gliding
@@ -90,7 +97,7 @@ func physics_movement(delta: float, player_body: XRToolsPlayerBody, disabled: bo
 	var horizontal_velocity := player_body.velocity * HORIZONTAL
 	var dir_forward := left_to_right.rotated(Vector3.UP, PI/2).normalized()
 	var forward_velocity := dir_forward * glide_forward_speed
-	horizontal_velocity = lerp(horizontal_velocity, forward_velocity, horizontal_slew_rate * delta)
+	horizontal_velocity = horizontal_velocity.lerp(forward_velocity, horizontal_slew_rate * delta)
 
 	# Perform the glide
 	var glide_velocity := horizontal_velocity + vertical_velocity * Vector3.UP
@@ -114,17 +121,18 @@ func _set_gliding(active: bool) -> void:
 	else:
 		emit_signal("player_glide_end")
 
+
 # This method verifies the movement provider has a valid configuration.
 func _get_configuration_warning():
 	# Verify the left controller
-	var test_left_controller_node = ARVRHelpers.get_left_controller(self)
+	var test_left_controller_node := XRHelpers.get_left_controller(self)
 	if !test_left_controller_node:
-		return "Unable to find left ARVR Controller node"
+		return "Unable to find left XR Controller node"
 
 	# Verify the right controller
-	var test_right_controller_node = ARVRHelpers.get_right_controller(self)
+	var test_right_controller_node := XRHelpers.get_right_controller(self)
 	if !test_right_controller_node:
-		return "Unable to find right ARVR Controller node"
+		return "Unable to find right XR Controller node"
 
 	# Check glide parameters
 	if glide_min_fall_speed > 0:
@@ -135,4 +143,4 @@ func _get_configuration_warning():
 		return "Glide fall speed must be faster than minimum fall speed"
 
 	# Call base class
-	return ._get_configuration_warning()
+	return super._get_configuration_warning()

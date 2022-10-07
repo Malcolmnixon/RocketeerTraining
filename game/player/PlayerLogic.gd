@@ -1,19 +1,19 @@
-extends Spatial
+extends Node3D
 
 
 # Player alive flag
 var alive := true
 
 # Get the flight movement node
-onready var flight: XRToolsFlightMovement = $"../MovementFlight"
+@onready var flight: XRToolsMovementFlight = $"../MovementFlight"
 
 # Get the low fuel alarm
-onready var low_fuel_alarm_sound: AudioStreamPlayer = $LowFuelAlarmSound
+@onready var low_fuel_alarm_sound: AudioStreamPlayer = $LowFuelAlarmSound
 
 
 func _ready():
 	# Connect game signals
-	GameSignals.connect("game_started", self, "_on_game_started")
+	GameSignals.connect("game_started",Callable(self,"_on_game_started"))
 
 
 func _process(delta: float):
@@ -34,7 +34,7 @@ func _process(delta: float):
 	$"../MovementFlight".enabled = GameState.player_fuel > 0
 	
 	# Report death by being lost
-	if alive and $"../PlayerBody/KinematicBody".global_transform.origin.length_squared() > 300*300:
+	if alive and $"../PlayerBody/CharacterBody3D".global_transform.origin.length_squared() > 300*300:
 		alive = false
 		GameSignals.emit_signal("death_by_lost")
 
@@ -50,7 +50,7 @@ func _on_game_started():
 	$"../RightHandController/MovementJump".enabled = true
 	$"../MovementClimb".enabled = true
 	$"../MovementFlight".enabled = true
-	$"../MovementJumpDetect".enabled = true
+	$"../MovementPhysicalJump".enabled = true
 	$"../MovementGlide".enabled = true
 
 

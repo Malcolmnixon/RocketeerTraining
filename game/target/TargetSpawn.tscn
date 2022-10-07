@@ -2,5 +2,5 @@
 
 [ext_resource path="res://game/target/TargetSpawn.gd" type="Script" id=1]
 
-[node name="TargetSpawn" type="Spatial"]
+[node name="TargetSpawn" type="Node3D"]
 script = ExtResource( 1 )

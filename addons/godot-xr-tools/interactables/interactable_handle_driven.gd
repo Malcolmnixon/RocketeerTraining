@@ -1,5 +1,5 @@
 class_name XRToolsInteractableHandleDriven
-extends Spatial
+extends Node3D
 
 
 ##
@@ -12,7 +12,7 @@ extends Spatial
 ##
 ##     When one or more handles are grabbed, the _process function is enabled
 ##     to process the handle-driven movement.
-##  
+##
 
 
 ## Signal called when this interactable is grabbed
@@ -36,7 +36,7 @@ func _ready():
 
 
 # Called when a handle is picked up
-func _on_handle_picked_up(var handle: XRToolsInteractableHandle) -> void:
+func _on_handle_picked_up(handle: XRToolsInteractableHandle) -> void:
 	# Append to the list of grabbed handles
 	grabbed_handles.append(handle)
 
@@ -50,12 +50,12 @@ func _on_handle_picked_up(var handle: XRToolsInteractableHandle) -> void:
 
 
 # Called when a handle is dropped
-func _on_handle_dropped(var handle: XRToolsInteractableHandle) -> void:
+func _on_handle_dropped(handle: XRToolsInteractableHandle) -> void:
 	# Remove from the list of grabbed handles
 	grabbed_handles.erase(handle)
 
 	# Disable processing when we drop the last handle
-	if grabbed_handles.empty():
+	if grabbed_handles.is_empty():
 		# Disable physics processing
 		set_process(false)
 
@@ -64,13 +64,13 @@ func _on_handle_dropped(var handle: XRToolsInteractableHandle) -> void:
 
 
 # Recursive function to hook picked_up and dropped signals in all child handles
-func _hook_child_handles(var node: Node) -> void:
+func _hook_child_handles(node: Node) -> void:
 	# If this node is a handle then hook its handle signals
 	var handle := node as XRToolsInteractableHandle
 	if handle:
-		if handle.connect("picked_up", self, "_on_handle_picked_up"):
+		if handle.picked_up.connect(_on_handle_picked_up):
 			push_error("Unable to connect handle signal")
-		if handle.connect("dropped", self, "_on_handle_dropped"):
+		if handle.dropped.connect(_on_handle_dropped):
 			push_error("Unable to connect handle signal")
 
 	# Recurse into all children

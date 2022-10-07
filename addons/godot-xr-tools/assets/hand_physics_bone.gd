@@ -1,5 +1,5 @@
 class_name XRToolsHandPhysicsBone
-extends BoneAttachment
+extends BoneAttachment3D
 
 
 ##
@@ -8,11 +8,11 @@ extends BoneAttachment
 ## @desc:
 ##     This script adds a physics hand bone to a godot-xr-tools physics hand.
 ##
-##     It extends from BoneAttachment to track the position of the bone in
+##     It extends from BoneAttachment3D to track the position of the bone in
 ##     the hand skeleton, and uses this position to move a CapsuleShape bone
 ##     KinematicBody.
 ##
-##     The bone Kinematic is set as top-level and manually driven with the 
+##     The bone Kinematic is set as top-level and manually driven with the
 ##     bones positon and rotation. This is to prevent hand-scaling from scaling
 ##     the Kinematic collision shape, as colliders cannot tolerate being scaled.
 ##
@@ -26,26 +26,26 @@ extends BoneAttachment
 
 
 ## Length of the bone
-export var length := 0.03
+@export var length : float = 0.03
 
 ## Ratio from length to width
-export var width_ratio := 0.3
+@export var width_ratio : float = 0.3
 
 ## Additional collision layer for this one bone
-export (int, LAYERS_3D_PHYSICS) var collision_layer = 0
+@export_flags_3d_physics var collision_layer : int = 0
 
 ## Additional bone group for this one bone
-export var bone_group := ""
+@export var bone_group : String = ""
 
 
 # Bone shape
-var _bone_shape : CapsuleShape
+var _bone_shape : CapsuleShape3D
 
 # Physics-bone body
-var _physics_bone : KinematicBody
+var _physics_bone : CharacterBody3D
 
 # Skeletal-bone spatial
-var _skeletal_bone : Spatial
+var _skeletal_bone : Node3D
 
 
 # Called when the node enters the scene tree for the first time.
@@ -53,37 +53,37 @@ func _ready():
 	# Connect the 'hand_scale_changed' signal
 	var physics_hand := _find_physics_hand()
 	if physics_hand:
-		physics_hand.connect("hand_scale_changed", self, "_on_hand_scale_changed")
+		physics_hand.hand_scale_changed.connect(_on_hand_scale_changed)
 
 	# Construct the bone shape
-	_bone_shape = CapsuleShape.new()
+	_bone_shape = CapsuleShape3D.new()
 	_bone_shape.margin = physics_hand.margin
-	_on_hand_scale_changed(ARVRServer.world_scale)
+	_on_hand_scale_changed(XRServer.world_scale)
 
 	# Construct the bone collision shape
-	var bone_collision := CollisionShape.new()
+	var bone_collision := CollisionShape3D.new()
 	bone_collision.set_name("BoneCollision")
 	bone_collision.shape = _bone_shape
-	bone_collision.transform.basis = Basis(Vector3.RIGHT, PI/2)
+	#bone_collision.transform.basis = Basis(Vector3.RIGHT, PI/2)
 
 	# Construct the bone body
-	_physics_bone = KinematicBody.new()
+	_physics_bone = CharacterBody3D.new()
 	_physics_bone.set_name("BoneBody")
-	_physics_bone.set_as_toplevel(true)
+	_physics_bone.set_as_top_level(true)
 	_physics_bone.collision_layer = physics_hand.collision_layer | collision_layer
 	_physics_bone.collision_mask = 0
 	_physics_bone.add_child(bone_collision)
 
 	# Set the optional bone group for all bones in the hand
-	if not physics_hand.bone_group.empty():
+	if not physics_hand.bone_group.is_empty():
 		_physics_bone.add_to_group(physics_hand.bone_group)
 
 	# Set the optional bone group for this one bone
-	if not bone_group.empty():
+	if not bone_group.is_empty():
 		_physics_bone.add_to_group(bone_group)
 
 	# Construct the bone middle spatial
-	_skeletal_bone = Spatial.new()
+	_skeletal_bone = Node3D.new()
 	_skeletal_bone.transform.origin = Vector3.UP * length / 2
 
 	# Add the bone body to this hand bone
@@ -108,7 +108,8 @@ func _move_bone(delta: float) -> void:
 	var bone_vel := (bone_xform.origin - _physics_bone.global_transform.origin) / delta
 
 	# Move the bone into position
-	_physics_bone.move_and_slide(bone_vel, Vector3.UP)
+	_physics_bone.velocity = bone_vel
+	_physics_bone.move_and_slide()
 
 	# Rotate the bone into the correct rotation
 	_physics_bone.global_transform.basis = bone_xform.basis
@@ -120,8 +121,8 @@ func _teleport_bone() -> void:
 	var bone_xform := _skeletal_bone.global_transform
 
 	# Set the bone position
-	_physics_bone.global_transform = Transform(
-		Basis(bone_xform.basis.get_rotation_quat()),
+	_physics_bone.global_transform = Transform3D(
+		Basis(bone_xform.basis.get_rotation_quaternion()),
 		bone_xform.origin)
 
 

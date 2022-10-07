@@ -1,6 +1,6 @@
-tool
+@tool
 class_name XRToolsPickable
-extends RigidBody
+extends RigidBody3D
 
 
 ##
@@ -46,44 +46,47 @@ enum PickableState {
 
 
 ## Flag indicating if the grip control must be held
-export var press_to_hold: bool = true
+@export var press_to_hold : bool = true
 
 ## Flag indicating transform should be reset to pickup center
-export var reset_transform_on_pickup: bool = true
+@export var reset_transform_on_pickup : bool = true
 
 ## Layer for this object while picked up
-export (int, LAYERS_3D_PHYSICS) var picked_up_layer = 0
+@export_flags_3d_physics var picked_up_layer = 0
 
 ## Method used to hold an object
-export (HoldMethod) var hold_method = HoldMethod.REMOTE_TRANSFORM
+@export_enum (HoldMethod) var hold_method : int = HoldMethod.REMOTE_TRANSFORM
 
 ## Method used to perform a ranged grab
-export (RangedMethod) var ranged_grab_method = RangedMethod.SNAP setget _set_ranged_grab_method
+@export_enum (RangedMethod) var ranged_grab_method : int = RangedMethod.SNAP:
+	set(new_value):
+		ranged_grab_method = new_value
+		can_ranged_grab = new_value != RangedMethod.NONE
 
 ## Speed for ranged grab
-export var ranged_grab_speed: float = 20.0
+@export var ranged_grab_speed : float = 20.0
 
 ## Refuse pick-by when in the specified group
-export var picked_by_exclude: String = ""
+@export var picked_by_exclude : String = ""
 
 ## Require pick-by to be in the specified group
-export var picked_by_require: String = ""
+@export var picked_by_require : String = ""
 
 
 # Can object be grabbed at range
 var can_ranged_grab: bool = true
 
-# Original RigidBody mode
-var original_mode
+# Original frozen state
+var was_frozen : bool = false
 
 # Entity holding this item
-var picked_up_by: Spatial = null
+var picked_up_by: Node3D = null
 
 # Controller holding this item (may be null if held by snap-zone)
-var by_controller: ARVRController = null
+var by_controller : XRController3D = null
 
 # Pickup center
-var center_pickup_on_node: Spatial = null
+var center_pickup_on_node: Node3D = null
 
 # Count of 'is_closest' grabbers
 var _closest_count: int = 0
@@ -92,16 +95,16 @@ var _closest_count: int = 0
 var _state = PickableState.IDLE
 
 # Remote transform
-var _remote_transform: RemoteTransform = null
+var _remote_transform: RemoteTransform3D = null
 
 # Move-to node for performing remote grab
 var _move_to: XRToolsMoveTo = null
 
 
 # Remember some state so we can return to it when the user drops the object
-onready var original_parent = get_parent()
-onready var original_collision_mask: int = collision_mask
-onready var original_collision_layer: int = collision_layer
+@onready var original_parent = get_parent()
+@onready var original_collision_mask : int = collision_mask
+@onready var original_collision_layer : int = collision_layer
 
 
 # Called when the node enters the scene tree for the first time.
@@ -111,7 +114,7 @@ func _ready():
 
 
 # Test if this object can be picked up
-func can_pick_up(_by: Spatial) -> bool:
+func can_pick_up(_by: Node3D) -> bool:
 	return _state == PickableState.IDLE
 
 
@@ -156,7 +159,7 @@ func drop_and_free():
 
 
 # Called when this object is picked up
-func pick_up(by: Spatial, with_controller: ARVRController) -> void:
+func pick_up(by: Node3D, with_controller: XRController3D) -> void:
 	# Skip if not idle
 	if _state != PickableState.IDLE:
 		return
@@ -168,11 +171,11 @@ func pick_up(by: Spatial, with_controller: ARVRController) -> void:
 	picked_up_by = by
 	by_controller = with_controller
 
-	# Remember the mode before pickup
-	original_mode = mode
+	# Remember if our object was already frozen
+	was_frozen = freeze
 
-	# turn off physics on our pickable object
-	mode = RigidBody.MODE_STATIC
+	# turn off physics on our pickable object and freeze it, we need to look into the freeze modes
+	freeze = true
 	collision_layer = picked_up_layer
 	collision_mask = 0
 
@@ -208,7 +211,7 @@ func let_go(p_linear_velocity: Vector3, p_angular_velocity: Vector3) -> void:
 				_remote_transform = null
 
 	# Restore RigidBody mode
-	mode = original_mode
+	freeze = was_frozen
 	collision_mask = original_collision_mask
 	collision_layer = original_collision_layer
 
@@ -240,7 +243,7 @@ func _start_ranged_grab() -> void:
 	# the center-pickup position
 	_move_to = XRToolsMoveTo.new()
 	_move_to.start(self, picked_up_by, center_pickup_on_node.transform.inverse(), ranged_grab_speed)
-	_move_to.connect("move_complete", self, "_ranged_grab_complete")
+	_move_to.move_complete.connect(_ranged_grab_complete)
 	self.add_child(_move_to)
 
 
@@ -248,7 +251,7 @@ func _ranged_grab_complete() -> void:
 	# Discard the XRToolsMoveTo performing the remote-grab
 	_move_to.queue_free()
 	_move_to = null
-	
+
 	# Perform the snap grab
 	_do_snap_grab()
 
@@ -261,14 +264,14 @@ func _do_snap_grab() -> void:
 	match hold_method:
 		HoldMethod.REMOTE_TRANSFORM:
 			# Calculate the snap transform for remote-transforming
-			var snap_transform: Transform
+			var snap_transform: Transform3D
 			if center_pickup_on_node:
 				snap_transform = center_pickup_on_node.transform
 			else:
-				snap_transform = Transform()
+				snap_transform = Transform3D()
 
 			# Construct the remote transform
-			_remote_transform = RemoteTransform.new()
+			_remote_transform = RemoteTransform3D.new()
 			_remote_transform.set_name("PickupRemoteTransform")
 			picked_up_by.add_child(_remote_transform)
 			_remote_transform.transform = snap_transform
@@ -276,11 +279,11 @@ func _do_snap_grab() -> void:
 
 		HoldMethod.REPARENT:
 			# Calculate the snap transform for reparenting
-			var snap_transform: Transform
+			var snap_transform: Transform3D
 			if center_pickup_on_node:
 				snap_transform = center_pickup_on_node.global_transform.inverse() * global_transform
 			else:
-				snap_transform = Transform()
+				snap_transform = Transform3D()
 
 			# Reparent to the holder with snap transform
 			original_parent.remove_child(self)
@@ -302,7 +305,7 @@ func _do_precise_grab() -> void:
 			var precise_transform = picked_up_by.global_transform.inverse() * global_transform
 
 			# Construct the remote transform
-			_remote_transform = RemoteTransform.new()
+			_remote_transform = RemoteTransform3D.new()
 			_remote_transform.set_name("PickupRemoteTransform")
 			picked_up_by.add_child(_remote_transform)
 			_remote_transform.transform = picked_up_by.global_transform.inverse() * global_transform
@@ -321,14 +324,9 @@ func _do_precise_grab() -> void:
 	emit_signal("picked_up", self)
 
 
-func _set_ranged_grab_method(new_value: int) -> void:
-	ranged_grab_method = new_value
-	can_ranged_grab = new_value != RangedMethod.NONE
-
-
 func _get_configuration_warning():
 	# Check for error cases when missing a PickupCenter
-	if not find_node("PickupCenter"):
+	if not get_node_or_null("PickupCenter"):
 		if reset_transform_on_pickup:
 			return "Missing PickupCenter child node for 'reset transform on pickup'"
 		if ranged_grab_method != RangedMethod.NONE:

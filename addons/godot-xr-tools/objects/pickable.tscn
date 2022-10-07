@@ -1,10 +1,11 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource path="res://addons/godot-xr-tools/objects/pickable.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://addons/godot-xr-tools/objects/pickable.gd" id="1"]
 
-[node name="Pickable" type="RigidBody"]
+[node name="PickableObject" type="RigidDynamicBody3D"]
 script = ExtResource( 1 )
+highlight_mesh_instance = null
 
-[node name="PickupCenter" type="Spatial" parent="."]
+[node name="PickupCenter" type="Node3D" parent="."]
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]

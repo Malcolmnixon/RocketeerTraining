@@ -1,4 +1,4 @@
-tool
+@tool
 class_name XRToolsMovementClimb
 extends XRToolsMovementProvider
 
@@ -10,7 +10,7 @@ extends XRToolsMovementProvider
 ##     with the PlayerBody attached to the players ARVROrigin.
 ##
 ##     StaticBody objects can be marked as climbable by adding the
-##     object climbable script to them
+##     climbable object script to them.
 ##
 ##     When climbing, the global velocity of the PlayerBody is averaged for
 ##     velocity_averages samples, and upon release the velocity is applied
@@ -30,22 +30,22 @@ const HORIZONTAL := Vector3(1.0, 0.0, 1.0)
 
 
 ## Movement provider order
-export var order := 15
+@export var order : int = 15
 
 ## Push forward when flinging
-export var forward_push := 1.0
+@export var forward_push : float = 1.0
 
 ## Velocity multiplier when flinging up walls
-export var fling_multiplier := 1.0
+@export var fling_multiplier : float = 1.0
 
 ## Averages for velocity measurement
-export var velocity_averages := 5
+@export var velocity_averages : int = 5
 
 ## Pickup function for the left hand
-export var left_pickup: NodePath
+@export_node_path(Node3D, XRToolsFunctionPickup) var left_pickup
 
 ## Pickup function for the right hand
-export var right_pickup: NodePath
+@export_node_path(Node3D, XRToolsFunctionPickup) var right_pickup
 
 
 # Velocity averaging fields
@@ -54,8 +54,13 @@ var _deltas = Array()
 
 
 # Node references
-onready var _left_pickup_node: XRToolsFunctionPickup = get_node(left_pickup)
-onready var _right_pickup_node: XRToolsFunctionPickup = get_node(right_pickup)
+@onready var _left_pickup_node : XRToolsFunctionPickup = get_node(left_pickup)
+@onready var _right_pickup_node : XRToolsFunctionPickup = get_node(right_pickup)
+
+
+func _ready():
+	# In Godot 4 we must now manually call our super class ready function
+	super._ready()
 
 
 func physics_movement(delta: float, player_body: XRToolsPlayerBody, disabled: bool):
@@ -160,16 +165,16 @@ func _get_configuration_warning():
 	# Verify the left controller
 	var test_left_pickup_node = get_node_or_null(left_pickup) if left_pickup else null
 	if !test_left_pickup_node or !test_left_pickup_node is XRToolsFunctionPickup:
-		return "Unable to find left FunctionPickup"
+		return "Unable to find left XRToolsFunctionPickup"
 
 	# Verify the right controller
 	var test_right_pickup_node = get_node_or_null(right_pickup) if right_pickup else null
 	if !test_right_pickup_node or !test_right_pickup_node is XRToolsFunctionPickup:
-		return "Unable to find right FunctionPickup"
+		return "Unable to find right XRToolsFunctionPickup"
 
 	# Verify velocity averages
 	if velocity_averages < 2:
 		return "Minimum of 2 velocity averages needed"
 
 	# Call base class
-	return ._get_configuration_warning()
+	return super._get_configuration_warning()

@@ -1,12 +1,13 @@
-tool
-class_name XRToolsDirectMovement
+@tool
+class_name XRToolsMovementDirect
 extends XRToolsMovementProvider
+
 
 ##
 ## Movement Provider for Direct Movement
 ##
 ## @desc:
-##     This script provides direct movement for the player. This script works 
+##     This script provides direct movement for the player. This script works
 ##     with the PlayerBody attached to the players ARVROrigin.
 ##
 ##     The following types of direct movement are supported:
@@ -19,31 +20,39 @@ extends XRToolsMovementProvider
 
 
 ## Movement provider order
-export var order := 10
+@export var order : int = 10
 
 ## Movement speed
-export var max_speed := 10.0
+@export var max_speed : float = 10.0
 
 ## Enable player strafing
-export var strafe := false
+@export var strafe : bool = false
+
+## Our directional input
+@export var input_action = "primary"
 
 
 # Controller node
-onready var _controller : ARVRController = get_parent()
+@onready var _controller : XRController3D = get_parent()
+
+
+func _ready():
+	# In Godot 4 we must now manually call our super class ready function
+	super._ready()
 
 
 # Perform jump movement
-func physics_movement(delta: float, player_body: XRToolsPlayerBody, _disabled: bool):
+func physics_movement(_delta: float, player_body: XRToolsPlayerBody, _disabled: bool):
 	# Skip if the controller isn't active
 	if !_controller.get_is_active():
 		return
 
 	# Apply forwards/backwards ground control
-	player_body.ground_control_velocity.y += _controller.get_joystick_axis(1) * max_speed
+	player_body.ground_control_velocity.y += _controller.get_axis(input_action).y * max_speed
 
 	# Apply left/right ground control
 	if strafe:
-		player_body.ground_control_velocity.x += _controller.get_joystick_axis(0) * max_speed
+		player_body.ground_control_velocity.x += _controller.get_axis(input_action).x * max_speed
 
 	# Clamp ground control
 	var length := player_body.ground_control_velocity.length()
@@ -55,8 +64,8 @@ func physics_movement(delta: float, player_body: XRToolsPlayerBody, _disabled: b
 func _get_configuration_warning():
 	# Check the controller node
 	var test_controller = get_parent()
-	if !test_controller or !test_controller is ARVRController:
-		return "Unable to find ARVR Controller node"
+	if !test_controller or !test_controller is XRController3D:
+		return "Unable to find XR Controller node"
 
 	# Call base class
-	return ._get_configuration_warning()
+	return super._get_configuration_warning()

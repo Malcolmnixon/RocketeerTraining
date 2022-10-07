@@ -1,20 +1,20 @@
-tool
+@tool
 class_name XRToolsHighlightRing
-extends MeshInstance
+extends MeshInstance3D
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# Turn off until requested
-	if not Engine.editor_hint:
+	# Turn unchecked until requested
+	if not Engine.is_editor_hint():
 		visible = false
 
 	# Hook the highlight update
-	get_parent().connect("highlight_updated", self, "_on_highlight_updated")
+	get_parent().connect("highlight_updated", _on_highlight_updated)
 
 
 # Called when the pickable highlight changes
-func _on_highlight_updated(pickable, enable: bool) -> void:
+func _on_highlight_updated(_pickable, enable: bool) -> void:
 	visible = enable
 
 

@@ -1,100 +1,100 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://dn0jx8t81f26p"]
 
-[ext_resource path="res://game/themes/RocketeerTrainingTitle.tres" type="Theme" id=1]
-[ext_resource path="res://game/themes/RocketeerTrainingStandard.tres" type="Theme" id=2]
-[ext_resource path="res://game/status/StatusScreen.gd" type="Script" id=3]
-[ext_resource path="res://assets/godotengine.org/icon_color.png" type="Texture" id=4]
-[ext_resource path="res://assets/oculus.com/Controllers.png" type="Texture" id=5]
-[ext_resource path="res://game/themes/RocketeerTrainingAbout.tres" type="Theme" id=6]
+[ext_resource type="Theme" uid="uid://b8yfjiedfnhdd" path="res://game/themes/RocketeerTrainingTitle.tres" id="1"]
+[ext_resource type="Theme" uid="uid://ci8lobq83cmm7" path="res://game/themes/RocketeerTrainingStandard.tres" id="2"]
+[ext_resource type="Script" path="res://game/status/StatusScreen.gd" id="3"]
+[ext_resource type="Texture2D" uid="uid://cpw52m5ua1gb0" path="res://assets/godotengine.org/icon_color.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://c4xelnssv6bjb" path="res://assets/oculus.com/Controllers.png" id="5"]
+[ext_resource type="Theme" uid="uid://d3eosqxcr125s" path="res://game/themes/RocketeerTrainingAbout.tres" id="6"]
 
 [node name="StatusScreen" type="Node2D"]
-script = ExtResource( 3 )
+script = ExtResource("3")
 
 [node name="Title" type="Label" parent="."]
-margin_right = 838.0
-margin_bottom = 102.0
-theme = ExtResource( 1 )
+offset_right = 838.0
+offset_bottom = 102.0
+theme = ExtResource("1")
 text = "Rocketeer Training"
-align = 1
+horizontal_alignment = 1
 
 [node name="MainPage" type="Node2D" parent="."]
 
 [node name="MadeWithGodot" type="Label" parent="MainPage"]
-margin_left = 542.0
-margin_top = 115.0
-margin_right = 917.0
-margin_bottom = 176.0
-theme = ExtResource( 2 )
+offset_left = 542.0
+offset_top = 115.0
+offset_right = 917.0
+offset_bottom = 176.0
+theme = ExtResource("2")
 text = "Made with Godot"
 
-[node name="GodotIcon" type="Sprite" parent="MainPage"]
-position = Vector2( 971, 133.2 )
-scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
+[node name="GodotIcon" type="Sprite2D" parent="MainPage"]
+position = Vector2(971, 133.2)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("4")
 
 [node name="LastScoreLabel" type="Label" parent="MainPage"]
-margin_left = 616.0
-margin_top = 267.0
-margin_right = 861.0
-margin_bottom = 328.0
-theme = ExtResource( 2 )
+offset_left = 616.0
+offset_top = 267.0
+offset_right = 861.0
+offset_bottom = 328.0
+theme = ExtResource("2")
 text = "Last Score:"
 
 [node name="LastScoreValue" type="Label" parent="MainPage"]
-margin_left = 877.0
-margin_top = 267.0
-margin_right = 991.0
-margin_bottom = 328.0
-theme = ExtResource( 2 )
+offset_left = 877.0
+offset_top = 267.0
+offset_right = 991.0
+offset_bottom = 328.0
+theme = ExtResource("2")
 text = "000"
 
 [node name="BestScoreLabel" type="Label" parent="MainPage"]
-margin_left = 610.0
-margin_top = 340.0
-margin_right = 861.0
-margin_bottom = 401.0
-theme = ExtResource( 2 )
+offset_left = 610.0
+offset_top = 340.0
+offset_right = 861.0
+offset_bottom = 401.0
+theme = ExtResource("2")
 text = "Best Score:"
 
 [node name="BestScoreValue" type="Label" parent="MainPage"]
-margin_left = 876.0
-margin_top = 340.0
-margin_right = 990.0
-margin_bottom = 401.0
-theme = ExtResource( 2 )
+offset_left = 876.0
+offset_top = 340.0
+offset_right = 990.0
+offset_bottom = 401.0
+theme = ExtResource("2")
 text = "000"
 
 [node name="StartButton" type="Button" parent="MainPage"]
-margin_left = 705.0
-margin_top = 433.0
-margin_right = 885.0
-margin_bottom = 500.0
-theme = ExtResource( 2 )
+offset_left = 705.0
+offset_top = 433.0
+offset_right = 885.0
+offset_bottom = 500.0
+theme = ExtResource("2")
 text = "Start"
 
 [node name="AboutButton" type="Button" parent="MainPage"]
-margin_left = 705.0
-margin_top = 515.0
-margin_right = 885.0
-margin_bottom = 582.0
-theme = ExtResource( 2 )
+offset_left = 705.0
+offset_top = 515.0
+offset_right = 885.0
+offset_bottom = 582.0
+theme = ExtResource("2")
 text = "About"
 
-[node name="Controllers" type="Sprite" parent="MainPage"]
-modulate = Color( 0.709804, 0.709804, 0.709804, 0.752941 )
-position = Vector2( 304.178, 421.052 )
-scale = Vector2( 0.740128, 0.818628 )
-texture = ExtResource( 5 )
+[node name="Controllers" type="Sprite2D" parent="MainPage"]
+modulate = Color(0.709804, 0.709804, 0.709804, 0.752941)
+position = Vector2(304.178, 421.052)
+scale = Vector2(0.740128, 0.818628)
+texture = ExtResource("5")
 
 [node name="AboutPage" type="Node2D" parent="."]
 visible = false
 
 [node name="RichTextLabel" type="RichTextLabel" parent="AboutPage"]
-margin_left = 31.0
-margin_top = 100.0
-margin_right = 986.0
-margin_bottom = 486.0
-theme = ExtResource( 6 )
+offset_left = 31.0
+offset_top = 100.0
+offset_right = 986.0
+offset_bottom = 486.0
+theme = ExtResource("6")
 text = "Version: 0.0.4
 By: Malcolm Nixon
 Code: github.com/Malcolmnixon/RocketeerTraining
@@ -109,11 +109,11 @@ License: MIT
 "
 
 [node name="BackButton" type="Button" parent="AboutPage"]
-margin_left = 829.0
-margin_top = 518.0
-margin_right = 1009.0
-margin_bottom = 585.0
-theme = ExtResource( 2 )
+offset_left = 829.0
+offset_top = 518.0
+offset_right = 1009.0
+offset_bottom = 585.0
+theme = ExtResource("2")
 text = "Back"
 
 [connection signal="pressed" from="MainPage/StartButton" to="." method="_on_StartButton_pressed"]

@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 
 
 ## Signal indicating a target has been passed through
