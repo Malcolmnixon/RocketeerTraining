@@ -20,24 +20,24 @@ _global_script_classes=[ {
 "path": "res://addons/godot-xr-tools/objects/climbable.gd"
 }, {
 "base": "XRToolsMovementProvider",
-"class": "XRToolsDirectMovement",
-"language": "GDScript",
-"path": "res://addons/godot-xr-tools/functions/movement_direct.gd"
-}, {
-"base": "XRToolsMovementProvider",
 "class": "XRToolsFallDamage",
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/examples/fall_damage.gd"
-}, {
-"base": "XRToolsMovementProvider",
-"class": "XRToolsFlightMovement",
-"language": "GDScript",
-"path": "res://addons/godot-xr-tools/functions/movement_flight.gd"
 }, {
 "base": "Spatial",
 "class": "XRToolsFunctionPickup",
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/functions/function_pickup.gd"
+}, {
+"base": "Spatial",
+"class": "XRToolsFunctionPointer",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/functions/function_pointer.gd"
+}, {
+"base": "KinematicBody",
+"class": "XRToolsFunctionTeleport",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/functions/function_teleport.gd"
 }, {
 "base": "Node",
 "class": "XRToolsGroundPhysics",
@@ -135,6 +135,16 @@ _global_script_classes=[ {
 "path": "res://addons/godot-xr-tools/functions/movement_crouch.gd"
 }, {
 "base": "XRToolsMovementProvider",
+"class": "XRToolsMovementDirect",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/functions/movement_direct.gd"
+}, {
+"base": "XRToolsMovementProvider",
+"class": "XRToolsMovementFlight",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/functions/movement_flight.gd"
+}, {
+"base": "XRToolsMovementProvider",
 "class": "XRToolsMovementGlide",
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/functions/movement_glide.gd"
@@ -150,9 +160,9 @@ _global_script_classes=[ {
 "path": "res://addons/godot-xr-tools/functions/movement_jump.gd"
 }, {
 "base": "XRToolsMovementProvider",
-"class": "XRToolsMovementJumpDetect",
+"class": "XRToolsMovementPhysicalJump",
 "language": "GDScript",
-"path": "res://addons/godot-xr-tools/functions/movement_jump_detect.gd"
+"path": "res://addons/godot-xr-tools/functions/movement_physical_jump.gd"
 }, {
 "base": "Node",
 "class": "XRToolsMovementProvider",
@@ -212,10 +222,10 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "ARVRHelpers": "",
 "XRToolsClimbable": "res://addons/godot-xr-tools/editor/icons/hand.svg",
-"XRToolsDirectMovement": "",
 "XRToolsFallDamage": "",
-"XRToolsFlightMovement": "",
 "XRToolsFunctionPickup": "res://addons/godot-xr-tools/editor/icons/function.svg",
+"XRToolsFunctionPointer": "res://addons/godot-xr-tools/editor/icons/function.svg",
+"XRToolsFunctionTeleport": "res://addons/godot-xr-tools/editor/icons/function.svg",
 "XRToolsGroundPhysics": "",
 "XRToolsGroundPhysicsSettings": "",
 "XRToolsHand": "res://addons/godot-xr-tools/editor/icons/hand.svg",
@@ -235,10 +245,12 @@ _global_script_class_icons={
 "XRToolsMoveTo": "",
 "XRToolsMovementClimb": "",
 "XRToolsMovementCrouch": "",
+"XRToolsMovementDirect": "",
+"XRToolsMovementFlight": "",
 "XRToolsMovementGlide": "",
 "XRToolsMovementGrapple": "",
 "XRToolsMovementJump": "",
-"XRToolsMovementJumpDetect": "",
+"XRToolsMovementPhysicalJump": "",
 "XRToolsMovementProvider": "res://addons/godot-xr-tools/editor/icons/movement_provider.svg",
 "XRToolsMovementTurn": "",
 "XRToolsMovementWind": "",
@@ -255,7 +267,7 @@ _global_script_class_icons={
 [application]
 
 config/name="RocketeerTraining"
-config/description="Rocketeer Training v0.0.4"
+config/description="Rocketeer Training v0.0.5"
 run/main_scene="res://game/FlightMap.tscn"
 config/icon="res://icon.png"
 

@@ -5,7 +5,7 @@ extends Spatial
 var alive := true
 
 # Get the flight movement node
-onready var flight: XRToolsFlightMovement = $"../MovementFlight"
+onready var flight: XRToolsMovementFlight = $"../MovementFlight"
 
 # Get the low fuel alarm
 onready var low_fuel_alarm_sound: AudioStreamPlayer = $LowFuelAlarmSound
@@ -50,7 +50,7 @@ func _on_game_started():
 	$"../RightHandController/MovementJump".enabled = true
 	$"../MovementClimb".enabled = true
 	$"../MovementFlight".enabled = true
-	$"../MovementJumpDetect".enabled = true
+	$"../MovementPhysicalJump".enabled = true
 	$"../MovementGlide".enabled = true
 
 

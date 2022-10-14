@@ -14,7 +14,7 @@
 [ext_resource path="res://addons/godot-xr-tools/functions/movement_climb.tscn" type="PackedScene" id=12]
 [ext_resource path="res://addons/godot-xr-tools/overrides/ground_physics_settings.gd" type="Script" id=13]
 [ext_resource path="res://addons/godot-xr-tools/functions/movement_jump.tscn" type="PackedScene" id=14]
-[ext_resource path="res://addons/godot-xr-tools/functions/movement_jump_detect.tscn" type="PackedScene" id=15]
+[ext_resource path="res://addons/godot-xr-tools/functions/movement_physical_jump.tscn" type="PackedScene" id=15]
 [ext_resource path="res://assets/freepd.com/Epic Blockbuster 2.mp3" type="AudioStream" id=16]
 [ext_resource path="res://game/player/fuel_gauge/FuelGauge.tscn" type="PackedScene" id=17]
 [ext_resource path="res://game/player/PlayerRules.gd" type="Script" id=18]
@@ -118,7 +118,7 @@ acceleration_scale = 20.0
 guidance = 1.0
 exclusive = false
 
-[node name="MovementJumpDetect" parent="." index="7" instance=ExtResource( 15 )]
+[node name="MovementPhysicalJump" parent="." index="7" instance=ExtResource( 15 )]
 enabled = false
 
 [node name="MovementGlide" parent="." index="8" instance=ExtResource( 9 )]
