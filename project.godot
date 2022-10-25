@@ -267,7 +267,7 @@ _global_script_class_icons={
 [application]
 
 config/name="RocketeerTraining"
-config/description="Rocketeer Training v0.0.5"
+config/description="Rocketeer Training v0.0.6"
 run/main_scene="res://game/FlightMap.tscn"
 config/icon="res://icon.png"
 
