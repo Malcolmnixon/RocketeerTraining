@@ -95,7 +95,7 @@ margin_top = 100.0
 margin_right = 986.0
 margin_bottom = 486.0
 theme = ExtResource( 6 )
-text = "Version: 0.0.6
+text = "Version: 0.0.7
 By: Malcolm Nixon
 Code: github.com/Malcolmnixon/RocketeerTraining
 Engine: godotengine.org

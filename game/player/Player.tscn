@@ -1,12 +1,12 @@
 [gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://assets/freesound.org/565491__jakegwizdak__wind-loop.mp3" type="AudioStream" id=1]
-[ext_resource path="res://addons/godot-xr-tools/assets/right_hand.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_tac_glove_low.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/godot-xr-tools/functions/movement_direct.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/godot-openxr/scenes/first_person_controller_vr.tscn" type="PackedScene" id=4]
-[ext_resource path="res://addons/godot-xr-tools/assets/player_body.tscn" type="PackedScene" id=5]
+[ext_resource path="res://addons/godot-xr-tools/player/player_body.tscn" type="PackedScene" id=5]
 [ext_resource path="res://addons/godot-xr-tools/functions/movement_flight.tscn" type="PackedScene" id=6]
-[ext_resource path="res://addons/godot-xr-tools/assets/left_hand.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_tac_glove_low.tscn" type="PackedScene" id=7]
 [ext_resource path="res://addons/godot-xr-tools/functions/function_pickup.tscn" type="PackedScene" id=8]
 [ext_resource path="res://addons/godot-xr-tools/functions/movement_glide.tscn" type="PackedScene" id=9]
 [ext_resource path="res://game/player/PlayerLogic.gd" type="Script" id=10]
@@ -58,7 +58,6 @@ mesh = SubResource( 2 )
 material/0 = ExtResource( 24 )
 
 [node name="LeftHand" parent="LeftHandController" index="0" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03, -0.05, 0.15 )
 
 [node name="MovementDirect" parent="LeftHandController" index="1" instance=ExtResource( 3 )]
 enabled = false
@@ -78,7 +77,6 @@ jump_button_id = 7
 transform = Transform( 0.939693, -0.34202, 0, 0.321394, 0.883022, -0.34202, 0.116978, 0.321394, 0.939693, -0.05, 0, 0.2 )
 
 [node name="RightHand" parent="RightHandController" index="0" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03, -0.05, 0.15 )
 
 [node name="MovementDirect" parent="RightHandController" index="1" instance=ExtResource( 3 )]
 enabled = false
@@ -95,9 +93,9 @@ enabled = false
 jump_button_id = 7
 
 [node name="MovementTurn" parent="RightHandController" index="4" instance=ExtResource( 20 )]
-smooth_rotation = true
 
 [node name="FunctionPointer" parent="RightHandController" index="5" instance=ExtResource( 21 )]
+laser_length = 1
 
 [node name="PlayerBody" parent="." index="4" instance=ExtResource( 5 )]
 push_rigid_bodies = false
@@ -106,8 +104,6 @@ physics = SubResource( 1 )
 [node name="MovementClimb" parent="." index="5" instance=ExtResource( 12 )]
 enabled = false
 fling_multiplier = 2.0
-left_pickup = NodePath("../LeftHandController/FunctionPickup")
-right_pickup = NodePath("../RightHandController/FunctionPickup")
 
 [node name="MovementFlight" parent="." index="6" instance=ExtResource( 6 )]
 enabled = false
