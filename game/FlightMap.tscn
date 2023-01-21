@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/opengameart.org/stormy_clouds.png" type="Texture" id=1]
 [ext_resource path="res://game/player/Player.tscn" type="PackedScene" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://game/audio/LandingSpeech.mp3" type="AudioStream" id=11]
 [ext_resource path="res://game/status/StatusScreen.tscn" type="PackedScene" id=12]
 [ext_resource path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" type="PackedScene" id=13]
+[ext_resource path="res://addons/godot-xr-tools/xr/start_xr.tscn" type="PackedScene" id=14]
 
 [sub_resource type="PanoramaSky" id=1]
 panorama = ExtResource( 1 )
@@ -20,12 +21,18 @@ panorama = ExtResource( 1 )
 [sub_resource type="Environment" id=2]
 background_mode = 2
 background_sky = SubResource( 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+ambient_light_sky_contribution = 0.8
 
 [node name="FlightMap" type="Spatial"]
 script = ExtResource( 6 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( -0.707107, 0.183013, -0.683013, 0, 0.965926, 0.258819, 0.707107, 0.183013, -0.683013, 0, 35, 0 )
+light_color = Color( 1, 0.984314, 0.847059, 1 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 
@@ -77,6 +84,8 @@ volume_db = 8.0
 
 [node name="GameActionTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="StartXR" parent="." instance=ExtResource( 14 )]
 
 [connection signal="finished" from="GameSounds/IntroSpeech" to="." method="_on_IntroSpeech_finished"]
 [connection signal="timeout" from="GameActionTimer" to="." method="_on_GameActionTimer_timeout"]

@@ -1,9 +1,9 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://assets/freesound.org/565491__jakegwizdak__wind-loop.mp3" type="AudioStream" id=1]
 [ext_resource path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_tac_glove_low.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/godot-xr-tools/functions/movement_direct.tscn" type="PackedScene" id=3]
-[ext_resource path="res://addons/godot-openxr/scenes/first_person_controller_vr.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/godot-openxr/config/OpenXRConfig.gdns" type="Script" id=4]
 [ext_resource path="res://addons/godot-xr-tools/player/player_body.tscn" type="PackedScene" id=5]
 [ext_resource path="res://addons/godot-xr-tools/functions/movement_flight.tscn" type="PackedScene" id=6]
 [ext_resource path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_tac_glove_low.tscn" type="PackedScene" id=7]
@@ -24,6 +24,7 @@
 [ext_resource path="res://addons/godot-xr-tools/misc/vr_common_shader_cache.tscn" type="PackedScene" id=22]
 [ext_resource path="res://game/target/TargetRingMaterial.tres" type="Material" id=23]
 [ext_resource path="res://game/target/TargetArrowMaterial.tres" type="Material" id=24]
+[ext_resource path="res://addons/godot-xr-tools/hands/materials/ghost_hand.tres" type="Material" id=25]
 
 [sub_resource type="QuadMesh" id=2]
 size = Vector2( 0.001, 0.001 )
@@ -40,72 +41,90 @@ jump_velocity = 3.0
 bounciness = 0.0
 bounce_threshold = 1.0
 
-[node name="Player" instance=ExtResource( 4 )]
+[node name="Player" type="ARVROrigin"]
 
-[node name="ARVRCamera" parent="." index="1"]
+[node name="Configuration" type="Node" parent="."]
+script = ExtResource( 4 )
+color_space = 0
+refresh_rate = 0.0
+
+[node name="ARVRCamera" type="ARVRCamera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0 )
+cull_mask = 524287
+fov = 65.0
+near = 0.1
 far = 1000.0
 
-[node name="VRCommonShaderCache" parent="ARVRCamera" index="0" instance=ExtResource( 22 )]
+[node name="VRCommonShaderCache" parent="ARVRCamera" instance=ExtResource( 22 )]
 
-[node name="TargetRing" type="MeshInstance" parent="ARVRCamera/VRCommonShaderCache" index="5"]
+[node name="TargetRing" type="MeshInstance" parent="ARVRCamera/VRCommonShaderCache"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2 )
 mesh = SubResource( 2 )
 material/0 = ExtResource( 23 )
 
-[node name="TargetArrow" type="MeshInstance" parent="ARVRCamera/VRCommonShaderCache" index="6"]
+[node name="TargetArrow" type="MeshInstance" parent="ARVRCamera/VRCommonShaderCache"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2 )
 mesh = SubResource( 2 )
 material/0 = ExtResource( 24 )
 
-[node name="LeftHand" parent="LeftHandController" index="0" instance=ExtResource( 7 )]
+[node name="LeftHandController" type="ARVRController" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, -0.5 )
 
-[node name="MovementDirect" parent="LeftHandController" index="1" instance=ExtResource( 3 )]
+[node name="LeftHand" parent="LeftHandController" instance=ExtResource( 7 )]
+hand_material_override = ExtResource( 25 )
+
+[node name="MovementDirect" parent="LeftHandController" instance=ExtResource( 3 )]
 enabled = false
 order = 10
 max_speed = 3.0
 strafe = true
 
-[node name="FunctionPickup" parent="LeftHandController" index="2" instance=ExtResource( 8 )]
+[node name="FunctionPickup" parent="LeftHandController" instance=ExtResource( 8 )]
 ranged_distance = 10.0
 ranged_angle = 10.0
 
-[node name="MovementJump" parent="LeftHandController" index="3" instance=ExtResource( 14 )]
+[node name="MovementJump" parent="LeftHandController" instance=ExtResource( 14 )]
 enabled = false
 jump_button_id = 7
 
-[node name="FuelGauge" parent="LeftHandController" index="4" instance=ExtResource( 17 )]
+[node name="FuelGauge" parent="LeftHandController" instance=ExtResource( 17 )]
 transform = Transform( 0.939693, -0.34202, 0, 0.321394, 0.883022, -0.34202, 0.116978, 0.321394, 0.939693, -0.05, 0, 0.2 )
 
-[node name="RightHand" parent="RightHandController" index="0" instance=ExtResource( 2 )]
+[node name="RightHandController" type="ARVRController" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, -0.5 )
+controller_id = 2
 
-[node name="MovementDirect" parent="RightHandController" index="1" instance=ExtResource( 3 )]
+[node name="RightHand" parent="RightHandController" instance=ExtResource( 2 )]
+hand_material_override = ExtResource( 25 )
+
+[node name="MovementDirect" parent="RightHandController" instance=ExtResource( 3 )]
 enabled = false
 order = 10
 max_speed = 3.0
 strafe = false
 
-[node name="FunctionPickup" parent="RightHandController" index="2" instance=ExtResource( 8 )]
+[node name="FunctionPickup" parent="RightHandController" instance=ExtResource( 8 )]
 ranged_distance = 10.0
 ranged_angle = 10.0
 
-[node name="MovementJump" parent="RightHandController" index="3" instance=ExtResource( 14 )]
+[node name="MovementJump" parent="RightHandController" instance=ExtResource( 14 )]
 enabled = false
 jump_button_id = 7
 
-[node name="MovementTurn" parent="RightHandController" index="4" instance=ExtResource( 20 )]
+[node name="MovementTurn" parent="RightHandController" instance=ExtResource( 20 )]
 
-[node name="FunctionPointer" parent="RightHandController" index="5" instance=ExtResource( 21 )]
+[node name="FunctionPointer" parent="RightHandController" instance=ExtResource( 21 )]
 laser_length = 1
 
-[node name="PlayerBody" parent="." index="4" instance=ExtResource( 5 )]
+[node name="PlayerBody" parent="." instance=ExtResource( 5 )]
 push_rigid_bodies = false
 physics = SubResource( 1 )
 
-[node name="MovementClimb" parent="." index="5" instance=ExtResource( 12 )]
+[node name="MovementClimb" parent="." instance=ExtResource( 12 )]
 enabled = false
 fling_multiplier = 2.0
 
-[node name="MovementFlight" parent="." index="6" instance=ExtResource( 6 )]
+[node name="MovementFlight" parent="." instance=ExtResource( 6 )]
 enabled = false
 bearing = 0
 speed_scale = 0.0
@@ -114,30 +133,30 @@ acceleration_scale = 20.0
 guidance = 1.0
 exclusive = false
 
-[node name="MovementPhysicalJump" parent="." index="7" instance=ExtResource( 15 )]
+[node name="MovementPhysicalJump" parent="." instance=ExtResource( 15 )]
 enabled = false
 
-[node name="MovementGlide" parent="." index="8" instance=ExtResource( 9 )]
+[node name="MovementGlide" parent="." instance=ExtResource( 9 )]
 enabled = false
 
-[node name="PlayerLogic" type="Spatial" parent="." index="9"]
+[node name="PlayerLogic" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0 )
 script = ExtResource( 10 )
 
-[node name="FlightSound" type="AudioStreamPlayer" parent="PlayerLogic" index="0"]
+[node name="FlightSound" type="AudioStreamPlayer" parent="PlayerLogic"]
 stream = ExtResource( 11 )
 
-[node name="GlideSound" type="AudioStreamPlayer" parent="PlayerLogic" index="1"]
+[node name="GlideSound" type="AudioStreamPlayer" parent="PlayerLogic"]
 stream = ExtResource( 1 )
 
-[node name="GameMusic" type="AudioStreamPlayer" parent="PlayerLogic" index="2"]
+[node name="GameMusic" type="AudioStreamPlayer" parent="PlayerLogic"]
 stream = ExtResource( 16 )
 autoplay = true
 
-[node name="LowFuelAlarmSound" type="AudioStreamPlayer" parent="PlayerLogic" index="3"]
+[node name="LowFuelAlarmSound" type="AudioStreamPlayer" parent="PlayerLogic"]
 stream = ExtResource( 19 )
 
-[node name="PlayerRules" type="Node" parent="." index="10"]
+[node name="PlayerRules" type="Node" parent="."]
 script = ExtResource( 18 )
 
 [connection signal="flight_finished" from="MovementFlight" to="PlayerLogic" method="_on_flight_finished"]
